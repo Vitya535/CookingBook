@@ -23,3 +23,8 @@ class UnitsOfMeasurement(Enum):  # добавить еще единиц изме
     GRAM = 'грамм'
     TABLE_SPOON = 'столовые ложки'
     LITERS = 'литры'
+
+
+DEFAULT_YEAR = 2018
+DEFAULT_MONTH = 9
+DEFAULT_DAY = 20
