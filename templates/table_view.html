@@ -1,0 +1,48 @@
+{% extends 'main_page_table_view.html'%}
+
+{% block css_and_js_files %}
+    <link rel="stylesheet" href="{{url_for('static', filename='style_table_view.css')}}">
+{% endblock %}
+
+{% block label_with_list %}
+    <div>Table:
+    <select>
+        {% for title in titles %}
+            <option>{{title[0]}}</option>
+        {% endfor %}
+    </select>
+    </div>
+{% endblock %}
+
+{% block btn_for_delete_and_add %}
+<div class="buttons">
+    <button>Добавить запись</button>
+    <button>Удалить запись</button>
+</div>
+{% endblock %}
+
+{% block table_content %}
+    <table class="content">
+        <thead>
+            <tr>
+                {% for attr in attrs %}
+                    <th class="attr">{{attr[1]}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for i in range(attrs|length) %}
+                    <td><input placeholder="фильтр"></td>
+                {% endfor %}
+            </tr>
+            {% for i in range(data|length) %}
+                <tr>
+                {% for item in data[i] %}
+                    <td class="item">{{item}}</td>
+                {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

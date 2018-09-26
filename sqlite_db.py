@@ -2,6 +2,7 @@
 from sqlite3 import connect
 
 CONN = connect('cooking_book.db')
+
 CURSOR = CONN.cursor()
 
 CURSOR.execute("""PRAGMA foreign_keys = ON""")
@@ -284,6 +285,39 @@ def get_images_of_dishes():
     cursor = conn.cursor()
     cursor.execute("""PRAGMA foreign_keys = ON""")
     cursor.execute("SELECT img_url FROM recipe")
+    conn.commit()
+    fetched_data = cursor.fetchall()
+    conn.close()
+    return fetched_data
+
+
+def get_titles():
+    """Получение названий отношений"""
+    conn = connect('cooking_book.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type = 'table'")
+    conn.commit()
+    fetched_data = cursor.fetchall()
+    conn.close()
+    return fetched_data
+
+
+def get_titles_of_attrs(table_name):
+    """Получение названий атрибутов в отношении"""
+    conn = connect('cooking_book.db')
+    cursor = conn.cursor()
+    cursor.execute("PRAGMA table_info(" + table_name + ")")
+    conn.commit()
+    fetched_data = cursor.fetchall()
+    conn.close()
+    return fetched_data
+
+
+def get_all_data_from_table(title_of_table):
+    """Получение кортежей из конкретной таблицы"""
+    conn = connect('cooking_book.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM " + title_of_table)
     conn.commit()
     fetched_data = cursor.fetchall()
     conn.close()
