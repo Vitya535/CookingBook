@@ -2,13 +2,19 @@
 
 {% block css_and_js_files %}
     <link rel="stylesheet" href="{{url_for('static', filename='style_table_view.css')}}">
+    <script type="text/javascript" src="{{url_for('static', filename='jquery-3.3.1.min.js')}}"></script>
+    <script type="text/javascript">{% include 'table_actions.js' %}</script>
 {% endblock %}
 
 {% block label_with_list %}
     <div>Table:
-    <select>
+    <select id="what_show">
         {% for title in titles %}
-            <option>{{title[0]}}</option>
+            {% if title[0] == selected %}
+                <option selected>{{title[0]}}</option>
+            {% else %}
+                <option>{{title[0]}}</option>
+            {% endif %}
         {% endfor %}
     </select>
     </div>
@@ -16,8 +22,16 @@
 
 {% block btn_for_delete_and_add %}
 <div class="buttons">
-    <button>Добавить запись</button>
-    <button>Удалить запись</button>
+    <button id="add">Добавить запись</button>
+    <button id="delete">Удалить запись</button>
+</div>
+{% endblock %}
+
+{% block for_update %}
+<div class="div_for_update">
+    <p>Редактирование ячейки БД</p>
+    <textarea cols="72" class="update"></textarea>
+    <p><button id="apply">Применить</button></p>
 </div>
 {% endblock %}
 
@@ -26,7 +40,7 @@
         <thead>
             <tr>
                 {% for attr in attrs %}
-                    <th class="attr">{{attr[1]}}</th>
+                    <th>{{attr[1]}}</th>
                 {% endfor %}
             </tr>
         </thead>

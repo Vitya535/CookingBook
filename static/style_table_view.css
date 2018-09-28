@@ -1,0 +1,45 @@
+.buttons
+{
+    position: relative;
+    left: 240px;
+    bottom: 20px;
+}
+
+html
+{
+    overflow: hidden;
+}
+
+table
+{
+    width: 55%;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 14px;
+    border-collapse: collapse;
+    text-align: center;
+    table-layout: fixed;
+}
+
+.div_for_update
+{
+    position: absolute;
+    top: 0px;
+    right: 60px;
+}
+
+.update
+{
+    height: 300px;
+    overflow-y: scroll;
+    resize: none;
+}
+
+th, td
+{
+    border: 2px solid #000000;
+}
+
+.item
+{
+    text-align: left;
+}
