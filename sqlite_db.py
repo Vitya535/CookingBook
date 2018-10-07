@@ -58,7 +58,7 @@ CONN.close()
 # а нужно ли утварь каскадно удалять или нет?
 
 
-def add_dish(name, description, portion_count, type_of_dish):
+def add_dish(name='', description='', portion_count=0, type_of_dish=''):
     """Добавление блюда"""
     conn = connect('cooking_book.db')
     cursor = conn.cursor()
@@ -93,7 +93,7 @@ def update_dish(name, description, portion_count, type_of_dish):
     conn.close()
 
 
-def add_ingredient(name, count, unit_of_measurement, dish_name):
+def add_ingredient(name='', count=0, unit_of_measurement='', dish_name=''):
     """Добавление ингредиента"""
     conn = connect('cooking_book.db')
     cursor = conn.cursor()
@@ -135,7 +135,7 @@ def update_ingredient(name, count, unit_of_measurement):
     conn.close()
 
 
-def add_implement(name, recipe_url):
+def add_implement(name='', recipe_url=''):
     """Добавление утвари"""
     conn = connect('cooking_book.db')
     cursor = conn.cursor()
@@ -174,7 +174,7 @@ def update_implement(name):
     conn.close()
 
 
-def add_recipe(img_url, literature_url, time_on_preparation, time_on_cooking, dish_name):
+def add_recipe(img_url='', literature_url='', time_on_preparation='', time_on_cooking='', dish_name=''):
     """Добавление рецепта"""
     conn = connect('cooking_book.db')
     cursor = conn.cursor()
@@ -217,7 +217,7 @@ def update_recipe(img_url, literature_url, time_on_preparation, time_on_cooking,
     conn.close()
 
 
-def add_step_of_cook(number, description, recipe_url):
+def add_step_of_cook(number=0, description='', recipe_url=''):
     """Добавление шага приготовления"""
     conn = connect('cooking_book.db')
     cursor = conn.cursor()
@@ -322,6 +322,7 @@ def get_all_data_from_table(title_of_table):
     fetched_data = cursor.fetchall()
     conn.close()
     return fetched_data
+
 
 # сделать функцию которая будет выводить самые популярные рецепты
 # поиск по названию блюда

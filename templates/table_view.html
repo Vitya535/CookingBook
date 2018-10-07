@@ -1,9 +1,11 @@
 {% extends 'main_page_table_view.html'%}
 
 {% block css_and_js_files %}
+    <link rel="icon" href="data:;base64,=">
     <link rel="stylesheet" href="{{url_for('static', filename='style_table_view.css')}}">
     <script type="text/javascript" src="{{url_for('static', filename='jquery-3.3.1.min.js')}}"></script>
     <script type="text/javascript">{% include 'table_actions.js' %}</script>
+    <script type="text/javascript">{% include 'jinja_script.js' %}</script>
 {% endblock %}
 
 {% block label_with_list %}

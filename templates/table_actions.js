@@ -23,8 +23,7 @@ $(document).ready(function()
         {
             $(e.target).css("background","green");
             green_td = e.target;
-            $('textarea.update').empty();
-            $('textarea.update').append($(e.target).html());
+            $('textarea.update').text($(e.target).html());
         }
         else if (e.target.tagName == 'TH')
         {
