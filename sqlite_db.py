@@ -58,7 +58,7 @@ CONN.close()
 # а нужно ли утварь каскадно удалять или нет?
 
 
-def add_dish(name='', description='', portion_count=0, type_of_dish=''):
+def add_dish(name='', description='', portion_count='', type_of_dish=''):
     """Добавление блюда"""
     conn = connect('cooking_book.db')
     cursor = conn.cursor()
@@ -100,14 +100,20 @@ def add_ingredient(name='', count=0, unit_of_measurement='', dish_name=''):
     cursor.execute("""PRAGMA foreign_keys = ON""")
     cursor.execute("SELECT id FROM dish WHERE name==?", (dish_name,))
     conn.commit()
-    dish_id = cursor.fetchall()[0][0]
+    try:
+        dish_id = cursor.fetchall()[0][0]
+    except IndexError:
+        dish_id = 1
     cursor.execute("INSERT INTO ingredient (name, count, unit_of_measurement) VALUES(?, ?, ?)",
                    (name, count, unit_of_measurement,))
     conn.commit()
     cursor.execute("SELECT id FROM ingredient WHERE name==? AND count==? AND unit_of_measurement==?",
                    (name, count, unit_of_measurement,))
     conn.commit()
-    ingredient_id = cursor.fetchall()[0][0]
+    try:
+        ingredient_id = cursor.fetchall()[0][0]
+    except IndexError:
+        ingredient_id = 1
     cursor.execute("INSERT INTO dish_and_ingredient (dish_id, ingredient_id) VALUES(?, ?)", (dish_id, ingredient_id,))
     conn.commit()
     conn.close()
@@ -142,12 +148,18 @@ def add_implement(name='', recipe_url=''):
     cursor.execute("""PRAGMA foreign_keys = ON""")
     cursor.execute("SELECT id FROM recipe WHERE literature_url==?", (recipe_url,))
     conn.commit()
-    recipe_id = cursor.fetchall()[0][0]
+    try:
+        recipe_id = cursor.fetchall()[0][0]
+    except IndexError:
+        recipe_id = 1
     cursor.execute("INSERT INTO implement (name) VALUES(?)", (name,))
     conn.commit()
     cursor.execute("SELECT id FROM implement WHERE name==?", (name,))
     conn.commit()
-    implement_id = cursor.fetchall()[0][0]
+    try:
+        implement_id = cursor.fetchall()[0][0]
+    except IndexError:
+        implement_id = 1
     cursor.execute("INSERT INTO recipe_and_implement (recipe_id, implement_id) VALUES(?, ?)",
                    (recipe_id, implement_id,))
     conn.commit()
@@ -181,7 +193,10 @@ def add_recipe(img_url='', literature_url='', time_on_preparation='', time_on_co
     cursor.execute("""PRAGMA foreign_keys = ON""")
     cursor.execute("SELECT id FROM dish WHERE name==?", (dish_name,))
     conn.commit()
-    dish_id = cursor.fetchall()[0][0]
+    try:
+        dish_id = cursor.fetchall()[0][0]
+    except IndexError:
+        dish_id = 1
     cursor.execute("INSERT INTO recipe (img_url, literature_url, time_on_preparation, time_on_cooking, dish_id)"
                    " VALUES(?, ?, ?, ?, ?)",
                    (img_url, literature_url, time_on_preparation, time_on_cooking, dish_id,))
@@ -224,7 +239,10 @@ def add_step_of_cook(number=0, description='', recipe_url=''):
     cursor.execute("""PRAGMA foreign_keys = ON""")
     cursor.execute("SELECT id FROM recipe WHERE literature_url==?", (recipe_url,))
     conn.commit()
-    recipe_id = cursor.fetchall()[0][0]
+    try:
+        recipe_id = cursor.fetchall()[0][0]
+    except IndexError:
+        recipe_id = 1
     cursor.execute("INSERT INTO step_of_cook (number_of_step, description, recipe_id) VALUES(?, ?, ?)",
                    (number, description, recipe_id,))
     conn.commit()
@@ -281,6 +299,7 @@ def get_all_dishes():
 
 
 def get_images_of_dishes():
+    """Получение изображений блюд"""
     conn = connect('cooking_book.db')
     cursor = conn.cursor()
     cursor.execute("""PRAGMA foreign_keys = ON""")
@@ -298,6 +317,7 @@ def get_titles():
     cursor.execute("SELECT name FROM sqlite_master WHERE type = 'table'")
     conn.commit()
     fetched_data = cursor.fetchall()
+    fetched_data.pop(1)
     conn.close()
     return fetched_data
 
@@ -324,6 +344,26 @@ def get_all_data_from_table(title_of_table):
     return fetched_data
 
 
+def delete_on_id(title_of_table, arg_id):
+    """Удаление из таблицы по ID"""
+    conn = connect('cooking_book.db')
+    cursor = conn.cursor()
+    cursor.execute("""PRAGMA foreign_keys = ON""")
+    cursor.execute("DELETE FROM " + title_of_table + " WHERE id==?", (arg_id,))
+    conn.commit()
+    conn.close()
+
+
+def update_data(title_of_table, attr_title, value, old_value):
+    """Редактирование данных в определенной таблице"""
+    conn = connect('cooking_book.db')
+    cursor = conn.cursor()
+    cursor.execute("""PRAGMA foreign_keys = ON""")
+    conn.commit()
+    cursor.execute("UPDATE " + title_of_table + " SET " + attr_title + "=? WHERE " + attr_title + "==?",
+                   (value, old_value,))
+    conn.commit()
+    conn.close()
 # сделать функцию которая будет выводить самые популярные рецепты
 # поиск по названию блюда
 # вывод некоторой статистической информации

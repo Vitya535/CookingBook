@@ -1,21 +1,23 @@
 {% extends 'main_page_table_view.html'%}
 
 {% block css_and_js_files %}
-    <link rel="icon" href="data:;base64,=">
-    <link rel="stylesheet" href="{{url_for('static', filename='style_table_view.css')}}">
-    <script type="text/javascript" src="{{url_for('static', filename='jquery-3.3.1.min.js')}}"></script>
-    <script type="text/javascript">{% include 'table_actions.js' %}</script>
-    <script type="text/javascript">{% include 'jinja_script.js' %}</script>
+    <link rel="icon" href="data:;base64,="/>
+    {% assets 'gen_style_file' %}
+        <link rel="stylesheet" href="{{ASSET_URL}}"/>
+    {% endassets %}
+    {% assets 'gen_script_file' %}
+        <script src="{{ASSET_URL}}"></script>
+    {% endassets %}
 {% endblock %}
 
 {% block label_with_list %}
     <div>Table:
     <select id="what_show">
         {% for title in titles %}
-            {% if title[0] == selected %}
-                <option selected>{{title[0]}}</option>
+            {% if title == selected %}
+                <option selected>{{title}}</option>
             {% else %}
-                <option>{{title[0]}}</option>
+                <option>{{title}}</option>
             {% endif %}
         {% endfor %}
     </select>
@@ -32,8 +34,8 @@
 {% block for_update %}
 <div class="div_for_update">
     <p>Редактирование ячейки БД</p>
-    <textarea cols="72" class="update"></textarea>
-    <p><button id="apply">Применить</button></p>
+    <textarea cols="72" class="update" readonly></textarea>
+    <p><button id="apply" disabled>Применить</button></p>
 </div>
 {% endblock %}
 
@@ -42,23 +44,23 @@
         <thead>
             <tr>
                 {% for attr in attrs %}
-                    <th>{{attr[1]}}</th>
+                    <th>{{attr}}</th>
+                {% endfor %}
+            </tr>
+            <tr class="filters">
+                {% for attr in attrs %}
+                    <td><input placeholder="фильтр"></td>
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
-            <tr>
-                {% for i in range(attrs|length) %}
-                    <td><input placeholder="фильтр"></td>
-                {% endfor %}
-            </tr>
-            {% for i in range(data|length) %}
-                <tr>
-                {% for item in data[i] %}
-                    <td class="item">{{item}}</td>
-                {% endfor %}
-                </tr>
+        {% for item in data %}
+        <tr class="data">
+            {% for attr in attrs %}
+                <td class="item">{{item[attr]}}</td>
             {% endfor %}
+        </tr>
+        {% endfor %}
         </tbody>
     </table>
 {% endblock %}
