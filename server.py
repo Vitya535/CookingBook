@@ -3,8 +3,10 @@ from html import escape
 from flask import render_template, jsonify, session, request
 from htmlmin.main import minify
 from app import APP
-from orm_db_actions import METADATA, orm_add, orm_delete, orm_update, Dish, Ingredient, Implement, Recipe, StepOfCook,\
-    RecipeAndImplement, DishAndIngredient
+from orm_db_actions import METADATA, orm_add, orm_delete, orm_update
+from orm_db_actions import Dish, Ingredient, Implement, Recipe, StepOfCook, RecipeAndImplement, DishAndIngredient
+
+# ToDo - поменять methods во всех route
 
 
 @APP.after_request
@@ -14,9 +16,7 @@ def add_http_headers(response):
     response.headers['X-Content-Type-Options'] = "nosniff"
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
-    response.headers['Content-Security-Policy'] = "default-src 'self'," \
-                                                  "object-src 'none'," \
-                                                  "img-src data:," \
+    response.headers['Content-Security-Policy'] = "object-src 'none'," \
                                                   "media-src 'none'," \
                                                   "frame-src 'none'," \
                                                   "font-src *.google.com,"
@@ -48,11 +48,11 @@ def update_in_database():
     return jsonify()
 
 
-@APP.route('/<path:selected_option>', methods=['POST'])
+@APP.route('/<path:selected_option>', methods=["POST"])
 def show_select_content(selected_option):
     """Показ содержания таблицы, которая выбрана из списка"""
     session['title_of_table'] = escape(selected_option)
-    attributes = (str(col).split('.')[1] for col in METADATA.tables[session['title_of_table']].columns)
+    attributes = [str(col).split('.')[1] for col in METADATA.tables[session['title_of_table']].columns]
     data = eval(session['title_of_table']).query.all()
     return jsonify(attributes, data)
 
@@ -61,9 +61,9 @@ def show_select_content(selected_option):
 def show_init_content():
     """Показ содержания таблицы dish"""
     session['title_of_table'] = 'Dish'
-    titles_of_attrs = (str(col).split('.')[1] for col in METADATA.tables['Dish'].columns)
+    titles_of_attrs = [str(col).split('.')[1] for col in METADATA.tables['Dish'].columns]
     template = render_template('table_view.html', titles=METADATA.tables.keys(),
                                attrs=titles_of_attrs,
-                               data=eval(session['title_of_table']).query.all(),
+                               data=Dish.query.all(),
                                selected=session['title_of_table'])
     return minify(template, remove_all_empty_space=True)

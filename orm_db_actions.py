@@ -1,3 +1,4 @@
+"""Бд для кулинарной книги через ORM"""
 from sqlalchemy import CheckConstraint, Table
 from app import db
 
@@ -11,6 +12,7 @@ RecipeAndImplement = Table('RecipeAndImplement', db.metadata,
 
 
 class Dish(db.Model):
+    """Табличка блюда"""
     __tablename__ = 'Dish'
     Id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Name = db.Column(db.String, nullable=False, unique=True, default="")
@@ -32,6 +34,7 @@ class Dish(db.Model):
 
 
 class Ingredient(db.Model):
+    """Табличка ингредиента"""
     __tablename__ = 'Ingredient'
     Id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Name = db.Column(db.String, nullable=False, default="")
@@ -48,6 +51,7 @@ class Ingredient(db.Model):
 
 
 class Implement(db.Model):
+    """Табличка утвари"""
     __tablename__ = 'Implement'
     Id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Name = db.Column(db.String, nullable=False, unique=True, default="")
@@ -60,6 +64,7 @@ class Implement(db.Model):
 
 
 class StepOfCook(db.Model):
+    """Табличка шага приготовления"""
     __tablename__ = 'StepOfCook'
     Id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Number_of_step = db.Column(db.Integer, CheckConstraint('Number_of_step>0'), nullable=False, default="")
@@ -77,6 +82,7 @@ class StepOfCook(db.Model):
 
 
 class Recipe(db.Model):
+    """Табличка рецепта"""
     __tablename__ = 'Recipe'
     Id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Img_url = db.Column(db.String, nullable=False, unique=True, default="")
@@ -102,6 +108,7 @@ class Recipe(db.Model):
 
 
 def orm_add(title_of_table):
+    """Добавление в бд"""
     new_row = eval(title_of_table)()
     db.session.add(new_row)
     db.session.flush()
@@ -109,6 +116,7 @@ def orm_add(title_of_table):
 
 
 def orm_delete(delete_id, title_of_table):
+    """Удаление из бд"""
     obj_for_delete = eval(title_of_table).query.get(delete_id)
     db.session.delete(obj_for_delete)
     db.session.flush()
@@ -116,6 +124,7 @@ def orm_delete(delete_id, title_of_table):
 
 
 def orm_update(value, update_id, attr_title, title_of_table):
+    """Редактирование в бд"""
     obj_for_update = eval(title_of_table).query.get(update_id)
     setattr(obj_for_update, attr_title, value)
     db.session.flush()
@@ -124,6 +133,3 @@ def orm_update(value, update_id, attr_title, title_of_table):
 
 METADATA = db.metadata
 db.create_all()
-db.session.add(Dish())
-db.session.flush()
-db.session.commit()
