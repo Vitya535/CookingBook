@@ -8,6 +8,13 @@
     {% assets 'gen_script_file' %}
         <script src="{{ASSET_URL}}" type="application/javascript"></script>
     {% endassets %}
+    <script type="application/javascript">{% include 'ajax_requests_to_table.js' %}</script>
+{% endblock %}
+
+{% block hidden_form_with_csrf_token %}
+<form method="post">
+    <input type="hidden" name="csrf_token" value="{{csrf_token()}}"/>
+</form>
 {% endblock %}
 
 {% block label_with_list %}

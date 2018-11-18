@@ -12,6 +12,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + path.join(basedir, 'cooking_book.db')
     SESSION_COOKIE_HTTPONLY = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    MINIFY_PAGE = True
 
 
 class ProductionConfig(Config):

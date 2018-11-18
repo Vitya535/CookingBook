@@ -1,6 +1,8 @@
 """Бд для кулинарной книги через ORM"""
 from sqlalchemy import CheckConstraint, Table
-from app import db
+from app import db, ma
+from sqlalchemy.exc import IntegrityError
+
 
 DishAndIngredient = Table('DishAndIngredient', db.metadata,
                           db.Column('Dish_Id', db.Integer, db.ForeignKey('Dish.Id')),
@@ -11,6 +13,7 @@ RecipeAndImplement = Table('RecipeAndImplement', db.metadata,
                            db.Column('Implement_Id', db.Integer, db.ForeignKey('Implement.Id')))
 
 
+# ToDo - сделать добавление по Enum (в тех таблицах где это нужно)
 class Dish(db.Model):
     """Табличка блюда"""
     __tablename__ = 'Dish'
@@ -33,6 +36,7 @@ class Dish(db.Model):
                                                    self.Type_Of_Dish)
 
 
+# ToDo - сделать добавление по Enum (в тех таблицах где это нужно)
 class Ingredient(db.Model):
     """Табличка ингредиента"""
     __tablename__ = 'Ingredient'
@@ -109,10 +113,13 @@ class Recipe(db.Model):
 
 def orm_add(title_of_table):
     """Добавление в бд"""
-    new_row = eval(title_of_table)()
-    db.session.add(new_row)
-    db.session.flush()
-    db.session.commit()
+    try:
+        new_row = eval(title_of_table)()
+        db.session.add(new_row)
+        db.session.flush()
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
 
 
 def orm_delete(delete_id, title_of_table):
@@ -129,6 +136,38 @@ def orm_update(value, update_id, attr_title, title_of_table):
     setattr(obj_for_update, attr_title, value)
     db.session.flush()
     db.session.commit()
+
+
+class DishSchema(ma.ModelSchema):
+    class Meta:
+        model = Dish
+
+
+class IngredientSchema(ma.ModelSchema):
+    class Meta:
+        model = Ingredient
+
+
+class ImplementSchema(ma.ModelSchema):
+    class Meta:
+        model = Implement
+
+
+class StepOfCookSchema(ma.ModelSchema):
+    class Meta:
+        model = StepOfCook
+
+
+class RecipeSchema(ma.ModelSchema):
+    class Meta:
+        model = Recipe
+
+
+dishes_schema = DishSchema(many=True)
+ingredients_schema = IngredientSchema(many=True)
+implements_schema = ImplementSchema(many=True)
+steps_of_cook_schema = StepOfCookSchema(many=True)
+recipes_schema = RecipeSchema(many=True)
 
 
 METADATA = db.metadata
