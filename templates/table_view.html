@@ -5,9 +5,8 @@
     {% assets 'gen_style_file' %}
         <link rel="stylesheet" href="{{ASSET_URL}}"/>
     {% endassets %}
-    {% assets 'gen_script_file' %}
-        <script src="{{ASSET_URL}}" type="application/javascript"></script>
-    {% endassets %}
+    <script type="application/javascript">{% include 'jquery-3.3.1.min.js' %}</script>
+    <script type="application/javascript">{% include 'jquery.tablesorter.js' %}</script>
     <script type="application/javascript">{% include 'ajax_requests_to_table.js' %}</script>
 {% endblock %}
 

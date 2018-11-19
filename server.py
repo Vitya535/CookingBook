@@ -17,15 +17,15 @@ def add_http_headers(response):
     response.headers['X-Content-Type-Options'] = "nosniff"
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
-    response.headers['Content-Security-Policy'] = "default-src 'self';" \
-                                                  "script-src 'self' 'unsafe-inline';" \
-                                                  "style-src 'self' 'unsafe-inline';" \
-                                                  "img-src 'self';" \
-                                                  "object-src 'none';" \
-                                                  "media-src 'none';" \
-                                                  "frame-src 'none';" \
-                                                  "connect-src 'self';" \
-                                                  "font-src *.google.com"
+    # response.headers['Content-Security-Policy'] = "default-src 'self';" \
+    #                                               "script-src 'self' 'unsafe-inline';" \
+    #                                               "style-src 'self' 'unsafe-inline';" \
+    #                                               "img-src 'self';" \
+    #                                               "object-src 'none';" \
+    #                                               "media-src 'none';" \
+    #                                               "frame-src 'none';" \
+    #                                               "connect-src 'self';" \
+    #                                               "font-src *.google.com"
     return response
 
 

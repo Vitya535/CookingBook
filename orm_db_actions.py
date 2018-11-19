@@ -20,7 +20,7 @@ class Dish(db.Model):
     Id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Name = db.Column(db.String, nullable=False, unique=True, default="")
     Description = db.Column(db.String, nullable=False, unique=True, default="")
-    Portion_count = db.Column(db.Integer, CheckConstraint('Portion_count>0'), nullable=False, default="")
+    Portion_count = db.Column(db.Integer, CheckConstraint('Portion_count>0'), nullable=False, default=None)
     Type_Of_Dish = db.Column(db.String, nullable=False, default="")
     Recipes = db.relationship("Recipe", backref='dish')
     Ingredients = db.relationship("Ingredient", secondary=DishAndIngredient)
@@ -42,7 +42,7 @@ class Ingredient(db.Model):
     __tablename__ = 'Ingredient'
     Id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Name = db.Column(db.String, nullable=False, default="")
-    Count = db.Column(db.Integer, CheckConstraint('Count>0'), default="")
+    Count = db.Column(db.Integer, CheckConstraint('Count>0'), default=None)
     Unit_of_measurement = db.Column(db.String, default="")
 
     def __init__(self, name="", count="", unit_of_measurement=""):
@@ -71,10 +71,10 @@ class StepOfCook(db.Model):
     """Табличка шага приготовления"""
     __tablename__ = 'StepOfCook'
     Id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Number_of_step = db.Column(db.Integer, CheckConstraint('Number_of_step>0'), nullable=False, default="")
+    Number_of_step = db.Column(db.Integer, CheckConstraint('Number_of_step>0'), nullable=False, default=None)
     Description = db.Column(db.String, nullable=False, unique=True, default="")
     Recipe_id = db.Column(db.Integer, db.ForeignKey('Recipe.Id', ondelete="CASCADE", onupdate="CASCADE"),
-                          nullable=False, default="")
+                          nullable=False, default=None)
 
     def __init__(self, number_of_step="", description="", recipe_id=""):
         self.Number_of_step = number_of_step
@@ -95,7 +95,7 @@ class Recipe(db.Model):
                                     nullable=False, default="")
     Time_on_cooking = db.Column(db.String, CheckConstraint('Time_on_cooking>0'), nullable=False, default="")
     Dish_id = db.Column(db.Integer, db.ForeignKey('Dish.Id', ondelete="CASCADE", onupdate="CASCADE"), nullable=False,
-                        default="")
+                        default=None)
     Steps_of_cook = db.relationship("StepOfCook", backref='recipe')
     Implements = db.relationship("Implement", secondary=RecipeAndImplement)
 
@@ -132,6 +132,7 @@ def orm_delete(delete_id, title_of_table):
 
 def orm_update(value, update_id, attr_title, title_of_table):
     """Редактирование в бд"""
+    print(update_id)
     obj_for_update = eval(title_of_table).query.get(update_id)
     setattr(obj_for_update, attr_title, value)
     db.session.flush()
