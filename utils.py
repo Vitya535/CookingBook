@@ -20,9 +20,9 @@ class TypesOfDish(Enum):
 
 class UnitsOfMeasurement(Enum):  # добавить еще единиц измерения (потом)
     """Перечисление для единиц измерения"""
-    GRAM = 'грамм'
-    TABLE_SPOON = 'столовые ложки'
-    LITERS = 'литры'
+    GRAM = 'Грамм'
+    TABLE_SPOON = 'Столовые ложки'
+    LITERS = 'Литры'
 
 
 DEFAULT_YEAR = 2018

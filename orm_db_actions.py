@@ -118,6 +118,7 @@ def orm_add(title_of_table):
         db.session.add(new_row)
         db.session.flush()
         db.session.commit()
+        return new_row.Id
     except IntegrityError:
         db.session.rollback()
 
@@ -132,7 +133,6 @@ def orm_delete(delete_id, title_of_table):
 
 def orm_update(value, update_id, attr_title, title_of_table):
     """Редактирование в бд"""
-    print(update_id)
     obj_for_update = eval(title_of_table).query.get(update_id)
     setattr(obj_for_update, attr_title, value)
     db.session.flush()

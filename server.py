@@ -33,8 +33,8 @@ def add_http_headers(response):
 @APP.route('/add_to_db', methods=['POST'])
 def add_to_database():
     """Функция-обертка для добавления записи в БД"""
-    orm_add(session['title_of_table'])
-    return jsonify()
+    new_id = orm_add(session['title_of_table'])
+    return jsonify(new_id)
 
 
 @APP.route('/del_from_db', methods=['POST'])
