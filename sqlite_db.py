@@ -17,7 +17,7 @@ CURSOR.execute("""CREATE TABLE if not exists dish
 CURSOR.execute("""CREATE TABLE if not exists ingredient
                 (id integer PRIMARY KEY AUTOINCREMENT,
                 name text NOT NULL, count integer CHECK (count>0),
-                unit_of_measurement text)""")
+                unit_of_measurement text NOT NULL)""")
 
 CURSOR.execute("""CREATE TABLE if not exists implement
                 (id integer PRIMARY KEY AUTOINCREMENT,

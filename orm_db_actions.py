@@ -2,6 +2,7 @@
 from sqlalchemy import CheckConstraint, Table
 from app import db, ma
 from sqlalchemy.exc import IntegrityError
+from utils import TypesOfDish, UnitsOfMeasurement
 
 
 DishAndIngredient = Table('DishAndIngredient', db.metadata,
@@ -13,7 +14,6 @@ RecipeAndImplement = Table('RecipeAndImplement', db.metadata,
                            db.Column('Implement_Id', db.Integer, db.ForeignKey('Implement.Id')))
 
 
-# ToDo - сделать добавление по Enum (в тех таблицах где это нужно)
 class Dish(db.Model):
     """Табличка блюда"""
     __tablename__ = 'Dish'
@@ -21,34 +21,35 @@ class Dish(db.Model):
     Name = db.Column(db.String, nullable=False, unique=True, default="")
     Description = db.Column(db.String, nullable=False, unique=True, default="")
     Portion_count = db.Column(db.Integer, CheckConstraint('Portion_count>0'), nullable=False, default=None)
-    Type_Of_Dish = db.Column(db.String, nullable=False, default="")
+    Type_Of_Dish = db.Column(db.Enum(TypesOfDish), default=TypesOfDish.SALADS_AND_APPETIZERS)  # ToDo - было
+    # db.String, стало db.Enum(TypesOfDish)
     Recipes = db.relationship("Recipe", backref='dish')
     Ingredients = db.relationship("Ingredient", secondary=DishAndIngredient)
 
-    def __init__(self, name="", description="", portion_count="", type_of_dish=""):
-        self.Description = description
-        self.Name = name
+    def __init__(self, portion_count=""):
+        # self.Description = description
+        # self.Name = name
         self.Portion_count = portion_count
-        self.Type_Of_Dish = type_of_dish
+        # self.Type_Of_Dish = type_of_dish
 
     def __repr__(self):
         return "Ingredient(%r, %r, %r, %r, %r)" % (self.Id, self.Name, self.Description, self.Portion_count,
                                                    self.Type_Of_Dish)
 
 
-# ToDo - сделать добавление по Enum (в тех таблицах где это нужно)
 class Ingredient(db.Model):
     """Табличка ингредиента"""
     __tablename__ = 'Ingredient'
     Id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Name = db.Column(db.String, nullable=False, default="")
     Count = db.Column(db.Integer, CheckConstraint('Count>0'), default=None)
-    Unit_of_measurement = db.Column(db.String, default="")
+    Unit_of_measurement = db.Column(db.Enum(UnitsOfMeasurement), default=UnitsOfMeasurement.GRAM)  # ToDo - здесь
+    # было db.String, стало db.Enum(UnitsOfMeasurement)
 
-    def __init__(self, name="", count="", unit_of_measurement=""):
+    def __init__(self, count=""):
         self.Count = count
-        self.Name = name
-        self.Unit_of_measurement = unit_of_measurement
+        # self.Name = name
+        # self.Unit_of_measurement = unit_of_measurement
 
     def __repr__(self):
         return "Ingredient(%r, %r, %r, %r)" % (self.Id, self.Name, self.Count, self.Unit_of_measurement)

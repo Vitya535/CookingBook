@@ -2,7 +2,7 @@
 from enum import Enum
 
 
-class TypesOfDish(Enum):
+class TypesOfDish(str, Enum):
     """Перечисление для типов блюд"""
     SALADS_AND_APPETIZERS = 'Салаты и закуски'
     SANDWICHES = 'Бутерброды и сэндвичи'
@@ -18,7 +18,7 @@ class TypesOfDish(Enum):
     SWEET_FOOD_AND_DRINKS = 'Сладкие блюда и напитки'
 
 
-class UnitsOfMeasurement(Enum):  # добавить еще единиц измерения (потом)
+class UnitsOfMeasurement(str, Enum):  # добавить еще единиц измерения (потом)
     """Перечисление для единиц измерения"""
     GRAM = 'Грамм'
     TABLE_SPOON = 'Столовые ложки'

@@ -5,9 +5,7 @@ from app import APP, csrf
 from orm_db_actions import METADATA, orm_add, orm_delete, orm_update, \
     Dish, Ingredient, Implement, Recipe, StepOfCook, \
     dishes_schema, ingredients_schema, implements_schema, recipes_schema, steps_of_cook_schema
-
-
-# ToDo - исправить таблицу в рецепте (ее отображение на странице)
+from utils import TypesOfDish, UnitsOfMeasurement
 
 
 @APP.after_request
@@ -29,7 +27,6 @@ def add_http_headers(response):
     return response
 
 
-# ToDo - исправить добавление данных
 @APP.route('/add_to_db', methods=['POST'])
 def add_to_database():
     """Функция-обертка для добавления записи в БД"""
@@ -62,6 +59,7 @@ def show_dish():
     attributes = [str(col).split('.')[1] for col in METADATA.tables['Dish'].columns]
     data = Dish.query.all()
     data_result = dishes_schema.dump(data)
+    print(data_result.data)
     return jsonify(attributes, data_result.data)
 
 
@@ -114,4 +112,6 @@ def show_init_content():
                            attrs=titles_of_attrs,
                            data=Dish.query.all(),
                            selected=session['title_of_table'],
+                           types_of_dish=TypesOfDish,
+                           units_of_measurement=UnitsOfMeasurement,
                            csrf=csrf)

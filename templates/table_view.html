@@ -61,11 +61,37 @@
         </thead>
         <tbody>
         {% for item in data %}
-        <tr class="data">
+            <tr class="data">
             {% for attr in attrs %}
-                <td class="item">{{item[attr]}}</td>
+                {% if attr == 'Type_Of_Dish' %}
+                    <td class="item">
+                        <select class="TypeOfDish">
+                            {% for type in types_of_dish %}
+                                {% if type.value == item[attr] %}
+                                    <option selected>{{type.value}}</option>
+                                {% else %}
+                                    <option>{{type.value}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                {% elif attr == 'Unit_of_measurement' %}
+                    <td class="item">
+                        <select class="UnitOfMeasurement">
+                            {% for unit in units_of_measurement %}
+                                {% if unit.value == item[attr] %}
+                                    <option selected>{{unit.value}}</option>
+                                {% else %}
+                                    <option>{{unit.value}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                {% else %}
+                    <td class="item">{{item[attr]}}</td>
+                {% endif %}
             {% endfor %}
-        </tr>
+            </tr>
         {% endfor %}
         </tbody>
     </table>
