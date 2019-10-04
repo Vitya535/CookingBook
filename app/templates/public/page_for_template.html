@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+    {% block connect_css_and_js %}
+        {#        <script>{% include 'public/jquery_custom_scripts.js' %}</script>#}
+        {#        <link href="https://fonts.googleapis.com/css?family=Charm|Yanone+Kaffeesatz" rel="stylesheet">#}
+        {#        <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/bootstrap_css/bootstrap.css') }}">#}
+        {#        <script>{% include 'public/popper_bootstrap_jquery-confirm.js' %}</script>#}
+        {#        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">#}
+        {#        {% assets 'jquery-confirm_fontawesome_custom_css' %}#}
+        {#            <link rel="stylesheet" href="{{ ASSET_URL }}">#}
+        {#        {% endassets %}#}
+
+        {#        {% assets 'jquery_custom_scripts' %}#}
+        {#            <script type="application/javascript" src="{{ ASSET_URL }}"></script>#}
+        {#        {% endassets %}#}
+        {#        {% assets 'popper_bootstrap_jquery-confirm_js' %}#}
+        {#            <script type="application/javascript" src="{{ ASSET_URL }}"></script>#}
+        {#        {% endassets %}#}
+
+        <script>{% include 'public/jquery_custom_scripts.js' %}</script>
+        <link href="https://fonts.googleapis.com/css?family=Charm|Yanone+Kaffeesatz" rel="stylesheet">
+        {% assets 'bootstrap_and_google_fonts' %}
+            <link rel="stylesheet" href="{{ ASSET_URL }}">
+        {% endassets %}
+        <script>{% include 'public/popper_bootstrap_jquery-confirm.js' %}</script>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        {% assets 'jquery-confirm_fontawesome_custom_css' %}
+            <link rel="stylesheet" href="{{ ASSET_URL }}">
+        {% endassets %}
+        <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+        {% block variable_css_and_js %}
+        {% endblock %}
+    {% endblock %}
+</head>
+<body>
+{% block navigation %}
+    <nav class="navbar navbar-expand fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('show_first_page') }}">Кулинарная книга</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+                        Блюда
+                        <b class="caret"></b>
+                    </a>
+                    {% block nav_menu %}
+                        <div class="dropdown-menu">
+                            {% for type in types_of_dish %}
+                                <a class="dropdown-item" href="{{ type.value[1] }}">{{ type.value[0] }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endblock %}
+                </div>
+                <a class="nav-link" data-value="conclusion" href="{{ url_for('show_about') }}">О проекте</a>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block header %}
+    <header class="header">
+        <div class="overlay">
+            {% block content %}
+                <div class="container">
+                    <div class="row text-center description">
+                        <h3>
+                            Добро пожаловать на сайт "Кулинарная книга"!!!
+                            <p>Здесь вы найдете множество различных рецептов! Надеюсь, что вы найдете блюда, которые
+                                придутся вам по душе!</p>
+                        </h3>
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
+    </header>
+{% endblock %}
+
+{% block modal_windows %}
+{% endblock %}
+</body>
+</html>
