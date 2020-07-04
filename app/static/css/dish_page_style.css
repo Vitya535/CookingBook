@@ -1,8 +1,3 @@
-.header
-{
-    background-image: none;
-}
-
 div.search_and_add
 {
     background: blue;
@@ -32,12 +27,4 @@ h4
     position: fixed;
     bottom: 0;
     right: 0;
-    z-index: 1030;
-}
-
-.color-link
-{
-    color: #ffffff;
-    background: #0000ff;
-    cursor: pointer;
 }

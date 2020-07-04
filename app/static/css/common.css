@@ -1,0 +1,33 @@
+.navbar
+{
+    background: #57c206;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    z-index: 1030;
+}
+
+.nav-link , .navbar-brand
+{
+    color: black;
+    cursor: pointer;
+}
+
+.nav-link
+{
+    margin-right: 1em !important;
+}
+
+.nav-link:hover
+{
+    background: #f4f4f4;
+    color: #f97300;
+}
+
+.navbar-collapse
+{
+    justify-content: flex-end;
+}
+
+.navbar-toggler
+{
+    background:#fff !important;
+}

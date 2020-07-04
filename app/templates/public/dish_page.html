@@ -1,16 +1,24 @@
 {% extends 'public/page_for_template.html' %}
 
-{% block variable_css_and_js %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/dish_page_style.css') }}">
+{% block title %}
+    <title>{{ selected_dish }}</title>
+{% endblock %}
+
+{% block variable_css %}
+    {% assets 'dish_page_css' %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
 {% endblock %}
 
 {% block nav_menu %}
     <div class="dropdown-menu">
         {% for type in types_of_dish %}
-            {% if type.value[0] == selected_dish %}
-                <a class="dropdown-item active" href="{{ type.value[1] }}">{{ type.value[0] }}</a>
+            {% if type.value == selected_dish %}
+                <a class="dropdown-item active"
+                   href="{{ url_for('show_dishes', type_of_dishes=type.name|lower) }}">{{ type.value }}</a>
             {% else %}
-                <a class="dropdown-item" href="{{ type.value[1] }}">{{ type.value[0] }}</a>
+                <a class="dropdown-item"
+                   href="{{ url_for('show_dishes', type_of_dishes=type.name|lower) }}">{{ type.value }}</a>
             {% endif %}
         {% endfor %}
     </div>
@@ -19,23 +27,23 @@
 {% block content %}
     <div class="container-fluid content">
         <div class="row fixed-top search_and_add">
-            <div class="col-3 my-auto">
+            <div class="col mt-1 ml-1">
                 <form class="form-inline" method="GET" action="{{ url_for('search') }}">
-                    <div class="form-group ml-1">
-                        <label for="query"></label>
-                        <input type="search" class="form-control" placeholder="Введите название блюда" name="query"
-                               id="query">
-                        <button data-toggle="tooltip" title="Поиск" class="btn btn-success ml-1" type="submit"><i
-                                class="fa fa-search"></i></button>
+                    <div class="input-group">
+                        {{ dish_search_form.dish_name }}
+                        <div class="input-group-append">
+                            {{ dish_search_form.button_search }}
+                        </div>
                     </div>
                 </form>
             </div>
-            <div class="col-6 my-auto text-center">
+            <div class="col mt-2 text-center">
                 <h4>{{ selected_dish }}</h4>
             </div>
-            <div class="col-3 my-auto">
-                <a href="#" class="float-right" data-toggle="modal" data-target="#modal_for_add">Хотите добавить свое
-                    блюдо?</a>
+            <div class="col mt-1 mr-2">
+                <button class="btn btn-light float-right font-weight-bold text-dark" data-toggle="modal" data-target="#modal_for_add">
+                    Добавить блюдо
+                </button>
             </div>
         </div>
 
@@ -48,12 +56,14 @@
                             class="fa fa-trash"></i></button>
                     <button data-toggle="tooltip" title="Редактирование блюда" class="btn btn-warning" type="submit"><i
                             class="fa fa-pencil"></i></button>
-                    <img src="{{ dish_info.recipes[0].img_url }}" class="img-fluid mt-2" alt="Изображение рецепта">
+                    <img src="{{ dish_info.recipes[0].img_url }}" class="img-fluid mt-2" alt="Изображение блюда" sizes="50vw">
                     <p>Описание: {{ dish_info.description }}</p>
                     <p>Время подготовки: {{ dish_info.recipes[0].time_on_preparation }}</p>
                     <p>Время приготовления: {{ dish_info.recipes[0].time_on_cooking }}</p>
-                    <p>Ссылка на литературу: <a
-                            href="{{ dish_info.recipes[0].literature_url }}">{{ dish_info.recipes[0].literature_url }}</a>
+                    <p>Ссылка на литературу:
+                        <a href="{{ dish_info.recipes[0].literature_url }}" class="text-dark font-weight-bold">
+                            {{ dish_info.recipes[0].literature_url }}
+                        </a>
                     </p>
                 </div>
                 <div class="col-3">
@@ -76,7 +86,7 @@
                 </div>
             </div>
         {% endfor %}
-        <button class="btn-lg btn-success pull-right mr-5 mb-5" id="back-top" type="submit">
+        <button class="btn-lg btn-success pull-right mr-5 mb-5" id="back-top" type="submit" aria-label="back-top">
             <i class="fa fa-arrow-up"></i>
         </button>
     </div>
@@ -102,7 +112,7 @@
                                 <label>
                                     <select class="dropdown">
                                         {% for type in types_of_dish %}
-                                            <option>{{ type.value[0] }}</option>
+                                            <option>{{ type.value }}</option>
                                         {% endfor %}
                                     </select>
                                 </label>
@@ -215,4 +225,8 @@
             </div>
         </div>
     {% endblock %}
+{% endblock %}
+
+{% block variable_js %}
+    <script type="application/javascript">{% include 'js/main.js' %}</script>
 {% endblock %}

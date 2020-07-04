@@ -25,5 +25,3 @@ def handle_csrf_error(error):
     """Эта функция обрабатывает ошибку CSRF валидации"""
     APP.logger.error(f"route: {request.url}, CSRF error: {error}")
     return render_template('errors/csrf_error.html'), 400
-
-# ToDo - pylint выдает ошибки

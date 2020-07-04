@@ -5,23 +5,15 @@ from app import DB
 from app.orm_db import Dish
 
 
-def delete_dish(dish_name):
+def delete_dish(dish_name: str) -> None:
     """Удаление информации о блюде из БД по его имени"""
     DB.session.query(Dish).filter_by(name=dish_name).delete()
     DB.session.flush()
     DB.session.commit()
 
 
-def get_dish_info(dish_type):
-    """Получение блюд, соответствующих типу dish_type"""
-    dishes_info = DB.session.query(Dish).filter_by(type_of_dish=dish_type).all()
-    return dishes_info
-
-
-def search_dishes_on_title(query_title, dish_type):
+def search_dishes_on_title(dish_type, query_title: str = "") -> list:
     """Поиск по названию блюда"""
-    dishes = DB.session.query(Dish).filter(and_(Dish.name.like('%' + query_title + '%'),
+    dishes = DB.session.query(Dish).filter(and_(Dish.name.like(f'%{query_title}%'),
                                                 Dish.type_of_dish.like(dish_type))).all()
     return dishes
-
-# ToDo - pylint выдает ошибки

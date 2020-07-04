@@ -27,13 +27,12 @@ RECIPE_AND_IMPLEMENT = Table('recipe_and_implement', DB.metadata,
 class Dish(DB.Model):
     """Табличка блюда"""
     __tablename__ = 'dish'
-    __searchable__ = ['name']
     id = DB.Column(DB.Integer, primary_key=True, autoincrement=True)
-    name = DB.Column(DB.String, nullable=False, unique=True, default="")
-    description = DB.Column(DB.String, nullable=False, unique=True, default="")
+    name = DB.Column(DB.String, nullable=False, unique=True)
+    description = DB.Column(DB.String, nullable=False, unique=True)
     portion_count = DB.Column(DB.Integer, CheckConstraint('portion_count>0'),
-                              nullable=False, default=None)
-    type_of_dish = DB.Column(DB.Enum(TypesOfDish), default=TypesOfDish.SALADS_AND_APPETIZERS)
+                              nullable=False)
+    type_of_dish = DB.Column(DB.Enum(TypesOfDish), nullable=False)
     recipes = DB.relationship('Recipe', backref='dish')
     ingredients = DB.relationship('Ingredient', secondary=DISH_AND_INGREDIENT,
                                   backref=DB.backref('dishes', lazy='dynamic'))
@@ -45,17 +44,16 @@ class Dish(DB.Model):
         self.type_of_dish = type_of_dish
 
     def __repr__(self):
-        return "Ingredient(%r, %r, %r, %r, %r)" % \
-               (self.id, self.name, self.description, self.portion_count, self.type_of_dish)
+        return f"Ingredient({self.id}, {self.name}, {self.description}, {self.portion_count}, {self.type_of_dish})"
 
 
 class Ingredient(DB.Model):
     """Табличка ингредиента"""
     __tablename__ = 'ingredient'
     id = DB.Column(DB.Integer, primary_key=True, autoincrement=True)
-    name = DB.Column(DB.String, nullable=False, default="")
-    count = DB.Column(DB.Integer, CheckConstraint('count>0'), default=None)
-    unit_of_measurement = DB.Column(DB.Enum(UnitsOfMeasurement), default=UnitsOfMeasurement.GRAM)
+    name = DB.Column(DB.String, nullable=False)
+    count = DB.Column(DB.Integer, CheckConstraint('count>0'), nullable=False)
+    unit_of_measurement = DB.Column(DB.Enum(UnitsOfMeasurement), nullable=False)
 
     def __init__(self, count, name, unit_of_measurement):
         self.count = count
@@ -63,34 +61,31 @@ class Ingredient(DB.Model):
         self.unit_of_measurement = unit_of_measurement
 
     def __repr__(self):
-        return "Ingredient(%r, %r, %r, %r)" % \
-               (self.id, self.name, self.count, self.unit_of_measurement)
+        return f"Ingredient({self.id}, {self.name}, {self.count}, {self.unit_of_measurement})"
 
 
 class Implement(DB.Model):
     """Табличка утвари"""
     __tablename__ = 'implement'
     id = DB.Column(DB.Integer, primary_key=True, autoincrement=True)
-    name = DB.Column(DB.String, nullable=False, unique=True, default="")
+    name = DB.Column(DB.String, nullable=False, unique=True)
 
     def __init__(self, name):
         self.name = name
 
     def __repr__(self):
-        return "Implement(%r, %r)" % (self.id, self.name)
+        return f"Implement({self.id}, {self.name})"
 
 
 class StepOfCook(DB.Model):
     """Табличка шага приготовления"""
     __tablename__ = 'step_of_cook'
     id = DB.Column(DB.Integer, primary_key=True, autoincrement=True)
-    number_of_step = DB.Column(DB.Integer, CheckConstraint('number_of_step>0'),
-                               nullable=False, default=None)
-    description = DB.Column(DB.String, nullable=False,
-                            unique=True, default="")
+    number_of_step = DB.Column(DB.Integer, CheckConstraint('number_of_step>0'), nullable=False)
+    description = DB.Column(DB.String, nullable=False, unique=True)
     recipe_id = DB.Column(DB.Integer,
                           DB.ForeignKey('recipe.id', ondelete="CASCADE", onupdate="CASCADE"),
-                          nullable=False, default=None)
+                          nullable=False)
 
     def __init__(self, number_of_step, description, recipe_id):
         self.number_of_step = number_of_step
@@ -98,23 +93,22 @@ class StepOfCook(DB.Model):
         self.recipe_id = recipe_id
 
     def __repr__(self):
-        return "StepOfCook(%r, %r, %r, %r)" % \
-               (self.id, self.number_of_step, self.description, self.recipe_id)
+        return f"StepOfCook({self.id}, {self.number_of_step}, {self.description}, {self.recipe_id})"
 
 
 class Recipe(DB.Model):
     """Табличка рецепта"""
     __tablename__ = 'recipe'
     id = DB.Column(DB.Integer, primary_key=True, autoincrement=True)
-    img_url = DB.Column(DB.String, nullable=False, unique=True, default="")
-    literature_url = DB.Column(DB.String, nullable=False, unique=True, default="")
+    img_url = DB.Column(DB.String, nullable=False, unique=True)
+    literature_url = DB.Column(DB.String, nullable=False, unique=True)
     time_on_preparation = DB.Column(DB.String, CheckConstraint('time_on_preparation>0'),
-                                    nullable=False, default="")
+                                    nullable=False)
     time_on_cooking = DB.Column(DB.String, CheckConstraint('time_on_cooking>0'),
-                                nullable=False, default="")
+                                nullable=False)
     dish_id = DB.Column(DB.Integer,
                         DB.ForeignKey('dish.id', ondelete="CASCADE", onupdate="CASCADE"),
-                        nullable=False, default=None)
+                        nullable=False)
     steps_of_cook = DB.relationship('StepOfCook', backref='recipe')
     implements = DB.relationship('Implement', secondary=RECIPE_AND_IMPLEMENT,
                                  backref=DB.backref('recipes', lazy='dynamic'))
@@ -127,12 +121,11 @@ class Recipe(DB.Model):
         self.dish_id = dish_id
 
     def __repr__(self):
-        return "Recipe(%r, %r, %r, %r, %r, %r)" % \
-               (self.id, self.img_url, self.literature_url,
-                self.time_on_preparation, self.time_on_cooking, self.dish_id)
+        return f"Recipe({self.id}, {self.img_url}, {self.literature_url}, {self.time_on_preparation}," \
+               f" {self.time_on_cooking}, {self.dish_id})"
 
 
-class DishSchema(MA.ModelSchema):
+class DishSchema(MA.SQLAlchemySchema):
     """Схема для таблички блюда"""
 
     class Meta:
@@ -140,7 +133,7 @@ class DishSchema(MA.ModelSchema):
         model = Dish
 
 
-class IngredientSchema(MA.ModelSchema):
+class IngredientSchema(MA.SQLAlchemySchema):
     """Схема для таблички ингредиента"""
 
     class Meta:
@@ -148,7 +141,7 @@ class IngredientSchema(MA.ModelSchema):
         model = Ingredient
 
 
-class ImplementSchema(MA.ModelSchema):
+class ImplementSchema(MA.SQLAlchemySchema):
     """Схема для таблички утвари"""
 
     class Meta:
@@ -156,7 +149,7 @@ class ImplementSchema(MA.ModelSchema):
         model = Implement
 
 
-class StepOfCookSchema(MA.ModelSchema):
+class StepOfCookSchema(MA.SQLAlchemySchema):
     """Схема для таблички шага приготовления"""
 
     class Meta:
@@ -164,7 +157,7 @@ class StepOfCookSchema(MA.ModelSchema):
         model = StepOfCook
 
 
-class RecipeSchema(MA.ModelSchema):
+class RecipeSchema(MA.SQLAlchemySchema):
     """Схема для таблички рецептов"""
 
     class Meta:
@@ -177,7 +170,3 @@ INGREDIENTS_SCHEMA = IngredientSchema(many=True)
 IMPLEMENTS_SCHEMA = ImplementSchema(many=True)
 STEPS_OF_COOK_SCHEMA = StepOfCookSchema(many=True)
 RECIPES_SCHEMA = RecipeSchema(many=True)
-
-DB.create_all()
-
-# ToDo - pylint выдает ошибки

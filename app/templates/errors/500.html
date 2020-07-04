@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"/>
+{% extends 'errors/main_error_template.html' %}
+
+{% block title %}
     <title>500 Internal Server Error</title>
-</head>
-<body>
-<h1>Пичалька, на нашем сайте кулинарной книги произошла ошибка. Извините за предоставленные неудобства!</h1>
-</body>
-</html>
+{% endblock %}
+
+{% block error_message %}
+    <h1>Пичалька, на нашем сайте кулинарной книги произошла ошибка. Извините за предоставленные неудобства!</h1>
+{% endblock %}

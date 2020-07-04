@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"/>
+{% extends 'errors/main_error_template.html' %}
+
+{% block title %}
     <title>404 Not Found Error</title>
-</head>
-<body>
-<h1>Пичалька, вы неправильно ввели URL для нашего сайта кулинарной книги</h1>
-</body>
-</html>
+{% endblock %}
+
+{% block error_message %}
+    <h1>Пичалька, вы неправильно ввели URL для нашего сайта кулинарной книги</h1>
+{% endblock %}

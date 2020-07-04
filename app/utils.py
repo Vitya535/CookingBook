@@ -2,23 +2,23 @@
 from enum import Enum
 
 
-class TypesOfDish(tuple, Enum):
+class TypesOfDish(str, Enum):
     """Перечисление для типов блюд"""
-    SALADS_AND_APPETIZERS = ('Салаты и закуски', '/dishes/salads_and_appetizers')
-    SANDWICHES = ('Бутерброды и сэндвичи', '/dishes/sandwiches')
-    MEAT_DISHES = ('Блюда из мяса', '/dishes/meat_dishes')
-    FISH_AND_SEAFOOD = ('Рыба и морепродукты', '/dishes/fish_and_seafood')
-    SAUCES_AND_MARINADES = ('Соусы и маринады', '/dishes/sauces_and_marinades')
-    VEGETABLE_DISHES = ('Блюда из овощей', '/dishes/vegetable_dishes')
-    MILK_DISHES = ('Молочные блюда', '/dishes/milk_dishes')
-    CEREALS_AND_PASTA = ('Крупы и макароны', '/dishes/cereals_and_pasta')
-    CAKES_AND_PASTRIES = ('Торты и выпечка', '/dishes/cakes_and_pastries')
-    FRUIT_DISHES = ('Блюда из фруктов', '/dishes/fruit_dishes')
-    LEAN_DISHES = ('Постные блюда', '/dishes/lean_dishes')
-    SWEET_FOOD_AND_DRINKS = ('Сладкие блюда и напитки', '/dishes/sweet_food_and_drinks')
+    SALADS_AND_APPETIZERS = 'Салаты и закуски'
+    SANDWICHES = 'Бутерброды и сэндвичи'
+    MEAT_DISHES = 'Блюда из мяса'
+    FISH_AND_SEAFOOD = 'Рыба и морепродукты'
+    SAUCES_AND_MARINADES = 'Соусы и маринады'
+    VEGETABLE_DISHES = 'Блюда из овощей'
+    MILK_DISHES = 'Молочные блюда'
+    CEREALS_AND_PASTA = 'Крупы и макароны'
+    CAKES_AND_PASTRIES = 'Торты и выпечка'
+    FRUIT_DISHES = 'Блюда из фруктов'
+    LEAN_DISHES = 'Постные блюда'
+    SWEET_FOOD_AND_DRINKS = 'Сладкие блюда и напитки'
 
 
-class UnitsOfMeasurement(str, Enum):  # добавить еще единиц измерения (потом)
+class UnitsOfMeasurement(str, Enum):
     """Перечисление для единиц измерения"""
     KILOGRAM = 'кг'
     GRAM = 'г'
