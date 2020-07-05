@@ -5,9 +5,38 @@
 {% endblock %}
 
 {% block variable_css %}
-    {% assets 'dish_page_css' %}
-        <link rel="stylesheet" href="{{ ASSET_URL }}">
-    {% endassets %}
+    <style type="text/css">
+        div.search_and_add
+        {
+            background: blue;
+            top: 56px;
+            height: 50px;
+            z-index: 1029;
+        }
+
+        p
+        {
+            font-family: 'Charm', cursive;
+        }
+
+        div.content
+        {
+            position: relative;
+            top: 109px;
+        }
+
+        h4
+        {
+            color: #fff;
+        }
+
+        #back-top
+        {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+        }
+    </style>
 {% endblock %}
 
 {% block nav_menu %}
@@ -56,7 +85,7 @@
                             class="fa fa-trash"></i></button>
                     <button data-toggle="tooltip" title="Редактирование блюда" class="btn btn-warning" type="submit"><i
                             class="fa fa-pencil"></i></button>
-                    <img src="{{ dish_info.recipes[0].img_url }}" class="img-fluid mt-2" alt="Изображение блюда" sizes="50vw">
+                    <img type="image/webp" src="{{ dish_info.recipes[0].img_url }}" class="img-fluid mt-2" alt="Изображение блюда" sizes="50vw">
                     <p>Описание: {{ dish_info.description }}</p>
                     <p>Время подготовки: {{ dish_info.recipes[0].time_on_preparation }}</p>
                     <p>Время приготовления: {{ dish_info.recipes[0].time_on_cooking }}</p>
@@ -228,5 +257,5 @@
 {% endblock %}
 
 {% block variable_js %}
-    <script type="application/javascript">{% include 'js/main.js' %}</script>
+    <script type="application/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}

@@ -9,7 +9,7 @@ BASEDIR = dirname(__file__)
 class Config:
     """Основной класс конфигурации"""
     SESSION_TYPE = 'filesystem'
-    CSRF_ENABLED = CDN_HTTPS = True
+    WTF_CSRF_ENABLED = CDN_HTTPS = True
     SECRET_KEY = urandom(16)
     SQLALCHEMY_DATABASE_URI = f'sqlite:///{join(BASEDIR, "cooking_book.db")}'
     CDN_TIMESTAMP = False

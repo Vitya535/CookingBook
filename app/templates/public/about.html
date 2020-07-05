@@ -1,5 +1,29 @@
 {% extends 'public/page_for_template.html' %}
 
+{% block variable_css %}
+    <style type="text/css">
+        .header
+        {
+            background-image: url('../../static/img/background_first_page.webp');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
+
+        .description
+        {
+            position: relative;
+            top: 200px;
+        }
+
+        .description p
+        {
+            font-size: 20px;
+            line-height: 1.5;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">

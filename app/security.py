@@ -10,7 +10,8 @@ CSP = {
     'media-src': '\'none\'',
     'frame-src': '\'self\'',
     'font-src': ['\'self\'', 'https://cdnjs.cloudflare.com', 'https://fonts.gstatic.com'],
-    'connect-src': '\'self\''
+    'connect-src': ['\'self\'', 'https://cdnjs.cloudflare.com', 'https://fonts.gstatic.com',
+                    'https://fonts.googleapis.com']
 }
 
 TALISMAN = Talisman()

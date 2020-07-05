@@ -1,0 +1,32 @@
+{
+  "start_url": "/",
+  "short_name": "Cooking Book",
+  "name": "Cooking Book",
+  "display": "standalone",
+  "prefer_related_applications": true,
+  "related_applications": [],
+  "theme_color": "black",
+  "background_color": "black",
+  "icons": [
+    {
+      "src": "img/pie.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
+    },
+    {
+      "src": "img/pie.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    },
+    {
+      "src": "img/pie.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/pie.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

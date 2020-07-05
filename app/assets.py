@@ -3,22 +3,11 @@ from flask_assets import Bundle
 from flask_assets import Environment
 
 BUNDLES = {
-    'first_page_and_about_page_css': Bundle(
-        'css/common.css',
-        'css/first_page_style.css',
-        output='gen/first_page_and_about_page.css',
-        filters='cssmin'
-    ),
-    'dish_page_css': Bundle(
-        'css/common.css',
-        'css/dish_page_style.css',
-        output='gen/dish_page.css',
-        filters='cssmin'
-    ),
     'jquery-confirm_fontawesome_custom_css': Bundle(
         'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css',
         'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css',
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/solid.min.css',
+        'css/common.css',
         output='gen/jquery-confirm_fontawesome_custom.css',
         filters='cssmin'
     ),
@@ -29,6 +18,7 @@ BUNDLES = {
         'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/fontawesome.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/solid.min.js',
+        'js/sw_register.js',
         output='gen/popper_bootstrap_jquery-confirm.js',
         filters='jsmin'
     )

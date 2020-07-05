@@ -5,22 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Recipe of dishes for cooking.">
     <meta name="theme-color" content="#317EFB"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     {% block title %}
         <title>{{ title }}</title>
     {% endblock %}
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 
     {% assets 'jquery-confirm_fontawesome_custom_css' %}
         <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Charm|Yanone+Kaffeesatz&display=swap">
-    {% block variable_css %}
-        {% assets 'first_page_and_about_page_css' %}
-            <link rel="stylesheet" href="{{ ASSET_URL }}">
-        {% endassets %}
-    {% endblock %}
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Charm|Yanone+Kaffeesatz&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Charm|Yanone+Kaffeesatz&display=swap"></noscript>
+    <style type="text/css">
+        .navbar
+        {
+            background: #57c206;
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            z-index: 1030;
+        }
 
+        .nav-link , .navbar-brand
+        {
+            color: black;
+            cursor: pointer;
+        }
+
+        .nav-link
+        {
+            margin-right: 1em !important;
+        }
+
+        .navbar-collapse
+        {
+            justify-content: flex-end;
+        }
+
+        .navbar-toggler
+        {
+            background:#fff !important;
+        }
+    </style>
+
+    {% block variable_css %}
+    {% endblock %}
 </head>
 <body>
 <nav class="navbar navbar-expand fixed-top">

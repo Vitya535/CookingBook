@@ -1,13 +1,11 @@
 $(document).ready(function () {
-    const csrf_token = "{{ csrf_token() }}";
+    const csrf_token = $('meta[name=csrf-token]').attr('content');
     const buttons_for_delete = $('.fa-trash').parent();
     const buttons_for_update = $('.fa-pencil').parent();
 
     $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrf_token);
-            }
+        headers: {
+            'X-CSRFToken': csrf_token
         }
     });
 
