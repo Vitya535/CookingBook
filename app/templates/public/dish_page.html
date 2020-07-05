@@ -57,7 +57,7 @@
     <div class="container-fluid content">
         <div class="row fixed-top search_and_add">
             <div class="col mt-1 ml-1">
-                <form class="form-inline" method="GET" action="{{ url_for('search') }}">
+                <form class="form-inline" method="GET" action="{{ url_for('show_dishes', type_of_dishes=type_of_dishes|lower) }}">
                     <div class="input-group">
                         {{ dish_search_form.dish_name }}
                         <div class="input-group-append">

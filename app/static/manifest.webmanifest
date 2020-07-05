@@ -9,22 +9,12 @@
   "background_color": "black",
   "icons": [
     {
-      "src": "img/pie.webp",
-      "sizes": "192x192",
-      "type": "image/webp"
-    },
-    {
-      "src": "img/pie.webp",
-      "sizes": "512x512",
-      "type": "image/webp"
-    },
-    {
-      "src": "img/pie.png",
+      "src": "img/pie-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "img/pie.png",
+      "src": "img/pie-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
