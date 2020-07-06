@@ -44,10 +44,10 @@
         {% for type in types_of_dish %}
             {% if type.value == selected_dish %}
                 <a class="dropdown-item active"
-                   href="{{ url_for('show_dishes', type_of_dishes=type.name|lower) }}">{{ type.value }}</a>
+                   href="{{ url_for('views.show_dishes', type_of_dishes=type.name|lower) }}">{{ type.value }}</a>
             {% else %}
                 <a class="dropdown-item"
-                   href="{{ url_for('show_dishes', type_of_dishes=type.name|lower) }}">{{ type.value }}</a>
+                   href="{{ url_for('views.show_dishes', type_of_dishes=type.name|lower) }}">{{ type.value }}</a>
             {% endif %}
         {% endfor %}
     </div>
@@ -57,7 +57,7 @@
     <div class="container-fluid content">
         <div class="row fixed-top search_and_add">
             <div class="col mt-1 ml-1">
-                <form class="form-inline" method="GET" action="{{ url_for('show_dishes', type_of_dishes=type_of_dishes|lower) }}">
+                <form class="form-inline" method="GET" action="{{ url_for('views.show_dishes', type_of_dishes=type_of_dishes|lower) }}">
                     <div class="input-group">
                         {{ dish_search_form.dish_name }}
                         <div class="input-group-append">
