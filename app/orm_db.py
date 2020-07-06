@@ -3,7 +3,6 @@ from sqlalchemy import CheckConstraint
 from sqlalchemy import Table
 
 from app import DB
-from app import MA
 from app.utils import TypesOfDish
 from app.utils import UnitsOfMeasurement
 
@@ -123,50 +122,3 @@ class Recipe(DB.Model):
     def __repr__(self):
         return f"Recipe({self.id}, {self.img_url}, {self.literature_url}, {self.time_on_preparation}," \
                f" {self.time_on_cooking}, {self.dish_id})"
-
-
-class DishSchema(MA.SQLAlchemySchema):
-    """Схема для таблички блюда"""
-
-    class Meta:
-        """Метаданные для схемы таблички блюда"""
-        model = Dish
-
-
-class IngredientSchema(MA.SQLAlchemySchema):
-    """Схема для таблички ингредиента"""
-
-    class Meta:
-        """Метаданные для схемы таблички ингредиента"""
-        model = Ingredient
-
-
-class ImplementSchema(MA.SQLAlchemySchema):
-    """Схема для таблички утвари"""
-
-    class Meta:
-        """Метаданные для схемы таблички утвари"""
-        model = Implement
-
-
-class StepOfCookSchema(MA.SQLAlchemySchema):
-    """Схема для таблички шага приготовления"""
-
-    class Meta:
-        """Метаданные для схемы таблички шага приготовления"""
-        model = StepOfCook
-
-
-class RecipeSchema(MA.SQLAlchemySchema):
-    """Схема для таблички рецептов"""
-
-    class Meta:
-        """Метаданные для схемы таблички рецептов"""
-        model = Recipe
-
-
-DISHES_SCHEMA = DishSchema(many=True)
-INGREDIENTS_SCHEMA = IngredientSchema(many=True)
-IMPLEMENTS_SCHEMA = ImplementSchema(many=True)
-STEPS_OF_COOK_SCHEMA = StepOfCookSchema(many=True)
-RECIPES_SCHEMA = RecipeSchema(many=True)

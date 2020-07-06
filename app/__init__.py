@@ -2,7 +2,6 @@
 from flask import Flask
 from flask_cdn import CDN
 from flask_compress import Compress
-from flask_marshmallow import Marshmallow
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
@@ -19,7 +18,6 @@ ASSETS.init_app(APP)
 
 SESSION = Session(APP)
 DB = SQLAlchemy(APP)
-MA = Marshmallow(APP)
 CSRF = CSRFProtect(APP)
 CDN = CDN(APP)
 COMPRESS = Compress(APP)
