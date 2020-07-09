@@ -12,7 +12,7 @@ $(document).ready(function () {
     $("#back-top")
         .hide()
         .on('click', function () {
-            $('body, html').animate({
+            $('html').animate({
                 scrollTop: 0
             }, 800);
             return false;

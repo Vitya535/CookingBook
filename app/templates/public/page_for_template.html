@@ -16,35 +16,32 @@
     {% assets 'jquery-confirm_fontawesome_custom_css' %}
         <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
-    <link rel="preload" href="https://fonts.googleapis.com/css?family=Charm|Yanone+Kaffeesatz&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Charm|Yanone+Kaffeesatz&display=swap"></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Charm|Yanone+Kaffeesatz&display=swap" as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Charm|Yanone+Kaffeesatz&display=swap">
+    </noscript>
     <style type="text/css">
-        .navbar
-        {
+        .navbar {
             background: #57c206;
             font-family: 'Yanone Kaffeesatz', sans-serif;
-            z-index: 1030;
         }
 
-        .nav-link , .navbar-brand
-        {
+        .nav-link, .navbar-brand {
             color: black;
             cursor: pointer;
         }
 
-        .nav-link
-        {
+        .nav-link {
             margin-right: 1em !important;
         }
 
-        .navbar-collapse
-        {
+        .navbar-collapse {
             justify-content: flex-end;
         }
 
-        .navbar-toggler
-        {
-            background:#fff !important;
+        .navbar-toggler {
+            background: white !important;
         }
     </style>
 
@@ -68,31 +65,19 @@
                 {% block nav_menu %}
                     <div class="dropdown-menu">
                         {% for type in types_of_dish %}
-                            <a class="dropdown-item" href="{{ url_for('views.show_dishes', type_of_dishes=type.name|lower) }}">{{ type.value }}</a>
+                            <a class="dropdown-item"
+                               href="{{ url_for('views.show_dishes', type_of_dishes=type.name|lower) }}">{{ type.value }}</a>
                         {% endfor %}
                     </div>
                 {% endblock %}
             </div>
-            <a class="nav-link" data-value="conclusion" href="{{ url_for('views.show_about') }}">О проекте</a>
+            <a class="nav-link" href="{{ url_for('views.show_about') }}">О проекте</a>
         </div>
     </div>
 </nav>
 
-<header class="header">
-    {% block content %}
-        <div class="overlay">
-            <div class="container">
-                <div class="row text-center description">
-                    <h3>
-                        Добро пожаловать на сайт "Кулинарная книга"!!!
-                        <p>Здесь вы найдете множество различных рецептов! Надеюсь, что вы найдете блюда, которые
-                            придутся вам по душе!</p>
-                    </h3>
-                </div>
-            </div>
-        </div>
-    {% endblock %}
-</header>
+{% block content %}
+{% endblock %}
 
 {% block modal_windows %}
 {% endblock %}

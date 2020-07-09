@@ -2,32 +2,28 @@
 
 {% block variable_css %}
     <style type="text/css">
-        .header
-        {
+        .header {
             background-image: url('../../static/img/background_first_page.webp');
             background-size: cover;
             background-position: center;
             height: 100vh;
         }
 
-        .description
-        {
-            position: relative;
-            top: 200px;
-        }
-
-        .description p
-        {
+        p {
             font-size: 20px;
             line-height: 1.5;
+        }
+
+        .container {
+            display: flex;
         }
     </style>
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col text-center description">
+    <header class="header">
+        <div class="container h-100 justify-content-center align-items-center">
+            <div class="text-center">
                 <h3>
                     О проекте:
                     <p>Рецепты взяты из книг и интернета :)</p>
@@ -35,5 +31,5 @@
                 </h3>
             </div>
         </div>
-    </div>
+    </header>
 {% endblock %}

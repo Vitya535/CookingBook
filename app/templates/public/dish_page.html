@@ -10,7 +10,7 @@
         {
             background: blue;
             top: 56px;
-            height: 50px;
+            height: 46px;
             z-index: 1029;
         }
 
@@ -22,12 +22,12 @@
         div.content
         {
             position: relative;
-            top: 109px;
+            top: 110px;
         }
 
         h4
         {
-            color: #fff;
+            color: white;
         }
 
         #back-top
@@ -55,8 +55,8 @@
 
 {% block content %}
     <div class="container-fluid content">
-        <div class="row fixed-top search_and_add">
-            <div class="col mt-1 ml-1">
+        <div class="row fixed-top search_and_add align-items-center">
+            <div class="col ml-1">
                 <form class="form-inline" method="GET" action="{{ url_for('views.show_dishes', type_of_dishes=type_of_dishes|lower) }}">
                     <div class="input-group">
                         {{ dish_search_form.dish_name }}
@@ -66,10 +66,10 @@
                     </div>
                 </form>
             </div>
-            <div class="col mt-2 text-center">
+            <div class="col text-center">
                 <h4>{{ selected_dish }}</h4>
             </div>
-            <div class="col mt-1 mr-2">
+            <div class="col mr-1">
                 <button class="btn btn-light float-right font-weight-bold text-dark" data-toggle="modal" data-target="#modal_for_add">
                     Добавить блюдо
                 </button>
@@ -77,14 +77,16 @@
         </div>
 
         {% for dish_info in dishes_info %}
-            <div class="row">
-                <div class="col-3">
-                    <p>{{ dish_info.name }}</p>
+            <div class="row border-bottom border-dark">
+                <div class="col border-right border-dark">
+                    <p class="font-weight-bold h3">{{ dish_info.name }}</p>
                     <p>Количество порций: {{ dish_info.portion_count }}</p>
-                    <button data-toggle="tooltip" title="Удаление блюда" class="btn btn-danger" type="submit"><i
-                            class="fa fa-trash"></i></button>
-                    <button data-toggle="tooltip" title="Редактирование блюда" class="btn btn-warning" type="submit"><i
-                            class="fa fa-pencil"></i></button>
+                    <button title="Удаление блюда" class="btn btn-danger" type="submit">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                    <button title="Редактирование блюда" class="btn btn-warning" type="submit">
+                        <i class="fa fa-pencil"></i>
+                    </button>
                     <img type="image/webp" src="{{ dish_info.recipes[0].img_url }}" class="img-fluid mt-2" alt="Изображение блюда" sizes="50vw">
                     <p>Описание: {{ dish_info.description }}</p>
                     <p>Время подготовки: {{ dish_info.recipes[0].time_on_preparation }}</p>
@@ -95,27 +97,27 @@
                         </a>
                     </p>
                 </div>
-                <div class="col-3">
-                    <p>Утварь:</p>
+                <div class="col border-right border-dark">
+                    <p class="font-weight-bold h3">Утварь:</p>
                     {% for implement in dish_info.recipes[0].implements %}
                         <p>{{ implement.name }}</p>
                     {% endfor %}
                 </div>
-                <div class="col-4">
-                    <p>Способ приготовления:</p>
+                <div class="col border-right border-dark">
+                    <p class="font-weight-bold h3">Способ приготовления:</p>
                     {% for step_of_cook in dish_info.recipes[0].steps_of_cook %}
                         <p>{{ step_of_cook.number_of_step }}. {{ step_of_cook.description }}</p>
                     {% endfor %}
                 </div>
-                <div class="col-2">
-                    <p>Ингредиенты:</p>
+                <div class="col">
+                    <p class="font-weight-bold h3">Ингредиенты:</p>
                     {% for ingredient in dish_info.ingredients %}
                         <p>{{ ingredient.name }} - {{ ingredient.count }} {{ ingredient.unit_of_measurement.value }}</p>
                     {% endfor %}
                 </div>
             </div>
         {% endfor %}
-        <button class="btn-lg btn-success pull-right mr-5 mb-5" id="back-top" type="submit" aria-label="back-top">
+        <button class="btn-lg btn-success mr-5 mb-5" id="back-top" type="submit" aria-label="back-top">
             <i class="fa fa-arrow-up"></i>
         </button>
     </div>

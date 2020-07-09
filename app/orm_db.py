@@ -43,7 +43,7 @@ class Dish(db.Model):
         self.type_of_dish = type_of_dish
 
     def __repr__(self):
-        return f"Ingredient({self.id}, {self.name}, {self.description}, {self.portion_count}, {self.type_of_dish})"
+        return f"Dish({self.id}, {self.name}, {self.description}, {self.portion_count}, {self.type_of_dish})"
 
 
 class Ingredient(db.Model):
