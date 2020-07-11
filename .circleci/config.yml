@@ -4,29 +4,34 @@ orbs:
   coveralls: coveralls/coveralls@1.0.6
 
 jobs:
-  run_tests:
+  build:
     docker:
-      - image: circleci/node:latest
-      - image: circleci/python:latest
+      - image: circleci/python:3.8.2
     steps:
       - checkout
-      - run: npm install
       - run:
           name: Install Python Dependencies
           command: |
             echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV && source $BASH_ENV
             pip install --user -r requirements.txt
-      - coveralls/upload
+  test:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run: npm install
       - run:
           name: Run Unit Tests
           command: |
             pytest --junitxml=test-reports/junit.xml --html=test-reports/pytest_report.html --self-contained-html
+      - coveralls/upload
       - store_test_results:
           path: test-reports
       - store_artifacts:
           path: test-reports
 
 workflows:
-  build_test:
+  build_and_test:
     jobs:
-      - run_tests
+      - build
+      - test
