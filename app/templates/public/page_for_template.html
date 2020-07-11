@@ -51,7 +51,7 @@
 <body>
 <nav class="navbar navbar-expand fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('views.show_first_page') }}">Кулинарная книга</a>
+        <a class="navbar-brand" href="{{ url_for('main.show_first_page') }}">Кулинарная книга</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -66,12 +66,12 @@
                     <div class="dropdown-menu">
                         {% for type in types_of_dish %}
                             <a class="dropdown-item"
-                               href="{{ url_for('views.show_dishes', type_of_dishes=type.name|lower) }}">{{ type.value }}</a>
+                               href="{{ url_for('main.show_dishes', type_of_dishes=type.name|lower) }}">{{ type.value }}</a>
                         {% endfor %}
                     </div>
                 {% endblock %}
             </div>
-            <a class="nav-link" href="{{ url_for('views.show_about') }}">О проекте</a>
+            <a class="nav-link" href="{{ url_for('main.show_about') }}">О проекте</a>
         </div>
     </div>
 </nav>

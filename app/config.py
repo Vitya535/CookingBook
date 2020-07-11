@@ -3,13 +3,16 @@ from os import urandom
 from os.path import dirname
 from os.path import join
 
+BASEDIR = dirname(__file__)
+APP_DB_RELPATH = "cooking_book.db"
+
 
 class Config:
     """Основной класс конфигурации"""
     SESSION_TYPE = 'filesystem'
     WTF_CSRF_ENABLED = CDN_HTTPS = SESSION_COOKIE_HTTPONLY = True
     SECRET_KEY = urandom(16)
-    SQLALCHEMY_DATABASE_URI = f'sqlite:///{join(dirname(__file__), "cooking_book.db")}'
+    SQLALCHEMY_DATABASE_URI = f'sqlite:///{join(BASEDIR, APP_DB_RELPATH)}'
     CDN_TIMESTAMP = False
     CDN_DOMAIN = 'cdnjs.cloudflare.com'
     CDN_ENDPOINTS = ('ajax/libs/jquery/3.5.1/jquery.min.js',

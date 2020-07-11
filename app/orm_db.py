@@ -54,9 +54,9 @@ class Ingredient(db.Model):
     count = db.Column(db.Integer, CheckConstraint('count>0'), nullable=False)
     unit_of_measurement = db.Column(db.Enum(UnitsOfMeasurement), nullable=False)
 
-    def __init__(self, count, name, unit_of_measurement):
-        self.count = count
+    def __init__(self, name, count, unit_of_measurement):
         self.name = name
+        self.count = count
         self.unit_of_measurement = unit_of_measurement
 
     def __repr__(self):

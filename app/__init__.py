@@ -9,26 +9,26 @@ from flask import Flask
 from flask.logging import create_logger
 
 from app.assets import ASSETS
-from app.errors import errors
+from app.errors import bp as errors_bp
+from app.errors import handlers
 from app.extensions import cdn
 from app.extensions import compress
 from app.extensions import csrf
 from app.extensions import db
 from app.extensions import session
+from app.main import bp as main_bp
 from app.security import CSP
 from app.security import TALISMAN
-from app.views import views
 
 
-def create_app():
+def create_app(config='app.config.DevelopmentConfig'):
     app = Flask(__name__)
+    app.config.from_object(config)
 
-    app.register_blueprint(views)
-    app.register_blueprint(errors)
+    app.register_blueprint(main_bp)
+    app.register_blueprint(errors_bp)
 
     init_logs(app)
-
-    app.config.from_object(f'app.config.{app.config["ENV"]}Config')
 
     ASSETS.init_app(app)
     session.init_app(app)
