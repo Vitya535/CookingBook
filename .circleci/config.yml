@@ -10,7 +10,7 @@ jobs:
       - image: circleci/python:latest
     steps:
       - checkout
-      - run: npm ci
+      - run: npm install
       - run:
           name: Install Python Dependencies
           command: |
