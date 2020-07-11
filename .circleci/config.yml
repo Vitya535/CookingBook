@@ -6,8 +6,8 @@ orbs:
 jobs:
   run_tests:
     docker:
-      - image: circleci/python:latest
       - image: circleci/node:latest
+      - image: circleci/python:latest
     steps:
       - checkout
       - run: npm install -g npm@latest
