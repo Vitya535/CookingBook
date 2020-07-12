@@ -22,7 +22,8 @@ jobs:
           command: |
             mkdir job_results
             coverage run -m unittest
-            coverage report -m && coverage html -d job_results
+            coverage report -m
+            sudo coverage html -d job_results
             coveralls
       - store_artifacts:
           path: job_results
