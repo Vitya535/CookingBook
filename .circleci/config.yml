@@ -24,8 +24,8 @@ jobs:
             mkdir artifacts
             coverage run -m unittest
             coverage report -m
-            coverage html
-            coverage html -d artifacts
+            $HOME/.local/bin/coverage html
+            $HOME/.local/bin/coverage html -d artifacts
             coveralls
       - store_test_results:
           path: htmlcov
