@@ -21,14 +21,15 @@ jobs:
           name: Run Unit Tests
           working_directory: ~/project/
           command: |
-            mkdir test-reports
+            mkdir htmlcov
+            mkdir artifacts
             coverage run -m unittest
             coverage report && coverage html
             coveralls
       - store_test_results:
           path: htmlcov
       - store_artifacts:
-          path: test-reports
+          path: artifacts
 
 workflows:
   build_test:
