@@ -3,6 +3,6 @@ branch = True
 source = app
 
 [report]
-fail_under = 0
+fail_under = 80
 show_missing = True
 skip_covered = True
