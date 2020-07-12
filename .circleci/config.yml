@@ -23,11 +23,10 @@ jobs:
           command: |
             mkdir test-reports
             coverage run -m unittest
-            coverage report
-            coverage html -d test-reports
+            coverage report && coverage html
             coveralls
       - store_test_results:
-          path: test-reports
+          path: htmlcov
       - store_artifacts:
           path: test-reports
 
