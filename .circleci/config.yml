@@ -14,14 +14,18 @@ jobs:
             . venv/bin/activate
             sudo pip install -r requirements.txt
       - run:
-          name: Run Unit Tests
+          name: Get Ready For Unit Tests
           command: |
             mkdir test-reports
             mkdir logs
             cd logs
             echo "" > debug.log
             echo "" > error.log
-            coverage run -m unittest discover -p "test*.py"
+      - run:
+          name: Run Unit Tests
+          working_directory: ~/project/test/
+          command: |
+            coverage run -m unittest
             coverage report && coverage xml -o test-reports/coverage.xml
             coveralls
       - store_test_results:
