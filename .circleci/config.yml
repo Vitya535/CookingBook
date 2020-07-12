@@ -20,10 +20,9 @@ jobs:
           name: Run Unit Tests
           working_directory: ~/project/
           command: |
-            mkdir htmlcov
+            mkdir job_results
             coverage run -m unittest
-            coverage report -m
-            coverage html -d job_results
+            coverage report -m && coverage html -d job_results
             coveralls
       - store_artifacts:
           path: job_results
