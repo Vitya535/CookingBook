@@ -23,10 +23,12 @@ jobs:
             mkdir htmlcov
             coverage run -m unittest
             coverage report -m
-            coverage html -d htmlcov
+            coverage html -d job_results
             coveralls
       - store_artifacts:
-          path: home/project/circleci/htmlcov
+          path: job_results
+      - store_test_results:
+          path: job_results
 workflows:
   build_test:
     jobs:
