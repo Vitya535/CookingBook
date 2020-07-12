@@ -17,13 +17,13 @@ jobs:
             $HOME/.local/bin/coverage run -m unittest discover
             $HOME/.local/bin/coverage report
             $HOME/.local/bin/coverage html
-      - coveralls/upload
+            $HOME/.local/bin/coveralls
       - store_test_results:
           path: test-reports
       - store_artifacts:
           path: test-reports
 
 workflows:
-  build_and_test:
+  build_test:
     jobs:
       - build_and_test
