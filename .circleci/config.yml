@@ -22,11 +22,11 @@ jobs:
           command: |
             coverage run -m unittest
             coverage html -d artifacts/test_results
-            coverage xml -o test_results.xml
+            coverage xml -o test_results/test_results.xml
             coverage report -m
             coveralls
       - store_test_results:
-          path: test_results.xml
+          path: test_results
       - store_artifacts:
           path: artifacts/test_results
 workflows:
