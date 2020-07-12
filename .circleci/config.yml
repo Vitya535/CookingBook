@@ -10,9 +10,7 @@ jobs:
           name: Install Python Dependencies
           command: |
             echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV && source $BASH_ENV
-            python3 -m venv venv
-            . venv/bin/activate
-            sudo pip install -r requirements.txt
+            pip install -r requirements.txt
       - run:
           name: Get Ready For Unit Tests
           working_directory: ~/project/app/logs
