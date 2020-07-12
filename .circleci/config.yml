@@ -23,7 +23,7 @@ jobs:
             echo "" > error.log
       - run:
           name: Run Unit Tests
-          working_directory: ~/project/test/
+          working_directory: ~/project/
           command: |
             coverage run -m unittest
             coverage report && coverage xml -o test-reports/coverage.xml
