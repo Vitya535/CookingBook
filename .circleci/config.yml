@@ -10,6 +10,8 @@ jobs:
           name: Install Python Dependencies
           command: |
             echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV && source $BASH_ENV
+            python3 -m venv venv
+            . venv/bin/activate
             pip3 install -r requirements.txt
       - run:
           name: Run Unit Tests
@@ -18,7 +20,6 @@ jobs:
             cd logs
             echo "" > debug.log
             echo "" > error.log
-            venv/Scripts/activate.bat
             $HOME/.local/bin/coverage run -m unittest discover
             $HOME/.local/bin/coverage report
             $HOME/.local/bin/coverage html
