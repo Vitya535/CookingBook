@@ -16,14 +16,14 @@ jobs:
       - run:
           name: Run Unit Tests
           command: |
+            mkdir test-reports
             mkdir logs
             cd logs
             echo "" > debug.log
             echo "" > error.log
-            sudo coverage run -m unittest discover
-            sudo coverage report
-            sudo coverage html
-            sudo coveralls
+            coverage report && coverage xml -o test-reports/coverage.xml
+            coverage run -m unittest discover
+            coveralls
       - store_test_results:
           path: test-reports
       - store_artifacts:
