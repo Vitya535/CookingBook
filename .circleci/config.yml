@@ -20,8 +20,8 @@ jobs:
           name: Run Unit Tests
           working_directory: ~/project/
           command: |
-            coverage report -m
             coverage run -m unittest
+            coverage report -m
             coverage html --directory=artifacts/test_results
             coverage html --directory=test_results
       - store_artifacts:
