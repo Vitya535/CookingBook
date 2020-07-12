@@ -21,7 +21,7 @@ jobs:
             cd logs
             echo "" > debug.log
             echo "" > error.log
-            coverage run -m unittest
+            coverage run -m unittest discover -p "test*.py"
             coverage report && coverage xml -o test-reports/coverage.xml
             coveralls
       - store_test_results:
