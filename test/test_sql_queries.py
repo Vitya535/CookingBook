@@ -2,7 +2,7 @@
 from app.orm_db_actions import delete_dish
 from app.orm_db_actions import search_dishes
 from app.utils import TypesOfDish
-from tests import BaseTestCase
+from test import BaseTestCase
 
 
 class SQLQueriesTestCase(BaseTestCase):

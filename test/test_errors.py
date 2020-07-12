@@ -1,7 +1,7 @@
 """Тесты для различных ошибок в приложении """
 from app.orm_db_actions import search_dishes
 from app.utils import TypesOfDish
-from tests import BaseTestCase
+from test import BaseTestCase
 
 
 class ErrorTestCase(BaseTestCase):

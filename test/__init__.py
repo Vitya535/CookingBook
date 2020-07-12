@@ -30,7 +30,7 @@ class BaseTestCase(TestCase):
 
     def setUp(self):
         """Инициализация необходимых параметров"""
-        self.app = create_app('tests.TestingConfig')
+        self.app = create_app('test.TestingConfig')
         self.app_ctx = self.app.app_context()
         self.app_ctx.push()
         self.client = self.app.test_client(use_cookies=True)

@@ -1,5 +1,5 @@
 """Тесты для GET запросов"""
-from tests import BaseTestCase
+from test import BaseTestCase
 
 
 class GetQueriesTestCase(BaseTestCase):
