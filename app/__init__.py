@@ -39,6 +39,9 @@ def create_app(config='app.config.DevelopmentConfig'):
     compress.init_app(app)
     TALISMAN.init_app(app, content_security_policy=CSP, force_https=False)
 
+    from app.main import routes
+    from app.errors import handlers
+
     return app
 
 
