@@ -21,9 +21,7 @@ jobs:
           working_directory: ~/project/
           command: |
             mkdir htmlcov
-            coverage run -m unittest
-            coverage report -m
-            coveralls
+            coverage run -m unittest && coverage report -m && coveralls
       - store_artifacts:
           path: htmlcov
 workflows:
