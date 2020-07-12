@@ -12,16 +12,17 @@ jobs:
             echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV && source $BASH_ENV
             python3 -m venv venv
             . venv/bin/activate
-            sudo pip install -r requirements.txt
+            sudo pip install --user -r requirements.txt
       - run:
           name: Run Unit Tests
           command: |
+            mkdir test-reports
             mkdir logs
             cd logs
             echo "" > debug.log
             echo "" > error.log
+            coverage run -m unittest
             coverage report && coverage xml -o test-reports/coverage.xml
-            coverage run -m unittest discover
             coveralls
       - store_test_results:
           path: test-reports
