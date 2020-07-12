@@ -26,9 +26,9 @@ jobs:
             coverage report && coverage html -d test-reports
             coveralls
       - store_test_results:
-          path: ~/project/test-reports
+          path: test-reports
       - store_artifacts:
-          path: ~/project/test-reports
+          path: test-reports
 
 workflows:
   build_test:
