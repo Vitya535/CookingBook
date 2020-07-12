@@ -22,7 +22,7 @@ jobs:
           command: |
             coverage run -m unittest;
             coverage report -m;
-            coverage html --directory=artifacts;
+            coverage html --directory=/home/circleci/project/artifacts;
             coveralls;
       - store_artifacts:
           path: artifacts
