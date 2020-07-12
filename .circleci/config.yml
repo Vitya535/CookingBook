@@ -23,10 +23,13 @@ jobs:
             mkdir job_results
             coverage run -m unittest
             coverage report
+            coverage html
+            coveralls
       - store_artifacts:
-          path: job_results
+          path: artifacts
       - store_test_results:
-          path: job_results
+          path: index.html
+          prefix: htmlcov
 workflows:
   build_test:
     jobs:
