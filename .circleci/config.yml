@@ -26,9 +26,9 @@ jobs:
             coverage report && coverage xml -o test-reports/coverage.xml
             coveralls
       - store_test_results:
-          path: test-reports
+          path: ~/project/test-reports
       - store_artifacts:
-          path: test-reports
+          path: ~/project/test-reports
 
 workflows:
   build_test:
