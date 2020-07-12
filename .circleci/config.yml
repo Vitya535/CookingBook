@@ -16,7 +16,6 @@ jobs:
       - run:
           name: Run Unit Tests
           command: |
-            mkdir test-reports
             mkdir logs
             cd logs
             echo "" > debug.log
