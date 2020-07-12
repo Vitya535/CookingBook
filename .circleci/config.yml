@@ -23,7 +23,7 @@ jobs:
           command: |
             mkdir test-reports
             coverage run -m unittest
-            coverage report && coverage xml -o test-reports/coverage.xml
+            coverage report && coverage html -d test-reports
             coveralls
       - store_test_results:
           path: ~/project/test-reports
