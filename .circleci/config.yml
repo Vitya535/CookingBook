@@ -22,7 +22,7 @@ jobs:
           command: |
             coverage run -m unittest
             coverage report
-            coverage html
+            coverage xml
             coveralls
       - store_test_results:
           path: test-results
