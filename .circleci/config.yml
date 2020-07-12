@@ -15,16 +15,15 @@ jobs:
             sudo pip install -r requirements.txt
       - run:
           name: Get Ready For Unit Tests
+          working_directory: ~/project/app/logs
           command: |
-            mkdir test-reports
-            mkdir logs
-            cd logs
             echo "" > debug.log
             echo "" > error.log
       - run:
           name: Run Unit Tests
           working_directory: ~/project/
           command: |
+            mkdir test-reports
             coverage run -m unittest
             coverage report && coverage xml -o test-reports/coverage.xml
             coveralls
