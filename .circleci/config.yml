@@ -8,22 +8,19 @@ jobs:
       - run:
           name: Install Python Dependencies
           command: |
-            echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV && source $BASH_ENV
-            pip install -r requirements.txt
+            echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV && source $BASH_ENV;
+            pip install -r requirements.txt;
       - run:
           name: Get Ready For Unit Tests
           working_directory: ~/project/app/logs
           command: |
-            echo "" > debug.log
-            echo "" > error.log
+            echo "" > debug.log;
+            echo "" > error.log;
       - run:
           name: Run Unit Tests
           working_directory: ~/project/
           command: |
-            coverage run -m unittest;
-            coverage report -m;
-            coverage html --directory=./home/circleci/project/artifacts;
-            coveralls;
+            coverage html --directory=artifacts;
       - store_artifacts:
           path: artifacts
 workflows:
