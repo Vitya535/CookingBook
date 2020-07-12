@@ -1,5 +1,4 @@
 version: 2.1
-
 jobs:
   build_and_test:
     docker:
@@ -24,13 +23,12 @@ jobs:
             mkdir htmlcov
             mkdir artifacts
             coverage run -m unittest
-            coverage report && coverage html
+            coverage report -m && coverage html -d htmlcov
             coveralls
       - store_test_results:
           path: htmlcov
       - store_artifacts:
           path: artifacts
-
 workflows:
   build_test:
     jobs:
