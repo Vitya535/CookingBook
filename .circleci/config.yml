@@ -22,11 +22,9 @@ jobs:
           command: |
             coverage run -m unittest
             coverage html -d artifacts/test_results
-            coveralls
-            coverage run -m unittest
             coverage html -d test_results
-            coverage run -m unittest
             coverage report -m
+            coveralls
       - store_artifacts:
           path: artifacts/test_results
       - store_test_results:
