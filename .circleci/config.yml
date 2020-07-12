@@ -24,7 +24,6 @@ jobs:
             coverage run -m unittest
             coverage report
             coverage html -d job_results
-            coveralls
       - store_artifacts:
           path: job_results
       - store_test_results:
