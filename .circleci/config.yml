@@ -21,9 +21,10 @@ jobs:
           working_directory: ~/project/
           command: |
             coverage run -m unittest
-            coverage html --directory=artifacts/test_results
+            coverage html -d artifacts/test_results
+            coveralls
             coverage run -m unittest
-            coverage html --directory=test_results
+            coverage html -d test_results
             coverage run -m unittest
             coverage report -m
       - store_artifacts:
