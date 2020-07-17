@@ -1,10 +1,7 @@
 """Инициализация данных, необходимых для тестирования приложения"""
-from os.path import dirname
-from os.path import join
 from unittest import TestCase
 
 from app import create_app
-from app.config import Config
 from app.extensions import db
 from app.orm_db import Dish
 from app.orm_db import Implement
@@ -14,23 +11,13 @@ from app.orm_db import StepOfCook
 from app.utils import TypesOfDish
 from app.utils import UnitsOfMeasurement
 
-BASEDIR = dirname(__file__)
-TEST_DB_RELPATH = 'test.db'
-
-
-class TestingConfig(Config):
-    """Конфигурация для тестирования"""
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    TESTING = True
-    SQLALCHEMY_DATABASE_URI = f'sqlite:///{join(BASEDIR, TEST_DB_RELPATH)}'
-
 
 class BaseTestCase(TestCase):
     """Базовый класс для всех тест-кейсов приложения"""
 
     def setUp(self):
         """Инициализация необходимых параметров"""
-        self.app = create_app('test.TestingConfig')
+        self.app = create_app()
         self.app_ctx = self.app.app_context()
         self.app_ctx.push()
         self.client = self.app.test_client(use_cookies=True)

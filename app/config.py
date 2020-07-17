@@ -5,6 +5,7 @@ from os.path import join
 
 BASEDIR = dirname(__file__)
 APP_DB_RELPATH = "cooking_book.db"
+TEST_DB_RELPATH = '../test/test.db'
 
 
 class Config:
@@ -16,21 +17,24 @@ class Config:
     CDN_TIMESTAMP = False
     CDN_DOMAIN = 'cdnjs.cloudflare.com'
     CDN_ENDPOINTS = ('ajax/libs/jquery/3.5.1/jquery.min.js',
-                     'ajax/libs/twitter-bootstrap/5.0.0-alpha1/js/bootstrap.min.js',
-                     'ajax/libs/popper.js/2.4.2/umd/popper.min.js',
+                     'ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js',
                      'ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js',
-                     'ajax/libs/font-awesome/5.13.1/js/fontawesome.min.js',
-                     'ajax/libs/font-awesome/5.13.1/js/solid.min.js',
-                     'ajax/libs/twitter-bootstrap/5.0.0-alpha1/css/bootstrap.min.css',
-                     'ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css',
-                     'ajax/libs/font-awesome/5.13.1/css/solid.min.css')
+                     'ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css',
+                     'ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css')
 
 
 class ProductionConfig(Config):
     """Конфигурация для выпуска в Production"""
-    JSONIFY_PRETTYPRINT_REGULAR = SQLALCHEMY_TRACK_MODIFICATIONS = False
+    JSONIFY_PRETTYPRINT_REGULAR = SQLALCHEMY_TRACK_MODIFICATIONS = ASSETS_DEBUG = False
 
 
 class DevelopmentConfig(Config):
     """Конфигурация для разработки"""
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = ASSETS_DEBUG = True
+
+
+class TestingConfig(Config):
+    """Конфигурация для тестирования"""
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = f'sqlite:///{join(BASEDIR, TEST_DB_RELPATH)}'

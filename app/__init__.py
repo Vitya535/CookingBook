@@ -19,9 +19,9 @@ from app.security import CSP
 from app.security import TALISMAN
 
 
-def create_app(config='app.config.DevelopmentConfig'):
+def create_app():
     app = Flask(__name__)
-    app.config.from_object(config)
+    app.config.from_object(f'app.config.{app.config["ENV"]}Config')
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
@@ -38,9 +38,6 @@ def create_app(config='app.config.DevelopmentConfig'):
     cdn.init_app(app)
     compress.init_app(app)
     TALISMAN.init_app(app, content_security_policy=CSP, force_https=False)
-
-    from app.main import routes
-    from app.errors import handlers
 
     return app
 

@@ -1,7 +1,7 @@
 $(document).ready(function () {
     const csrf_token = $('meta[name=csrf-token]').attr('content');
-    const buttons_for_delete = $('.fa-trash').parent();
-    const buttons_for_update = $('.fa-pencil').parent();
+    const buttons_for_delete = $('.bi-trash').parent();
+    const buttons_for_update = $('.bi-pencil').parent();
 
     $.ajaxSetup({
         headers: {

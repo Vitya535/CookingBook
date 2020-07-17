@@ -17,24 +17,20 @@ const urlsToCache = [
     '/static/robots.txt',
     'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css',
     'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/solid.min.css',
+    'https://fonts.googleapis.com/css?family=Charm|Yanone+Kaffeesatz&display=swap',
     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.2/umd/popper.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/fontawesome.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/solid.min.js',
     '/static/css/common.css',
     '/static/js/sw_register.js',
     '/static/gen/jquery-confirm_fontawesome_custom.css',
-    '/static/gen/popper_bootstrap_jquery-confirm.js',
+    '/static/gen/bootstrap_jquery-confirm.js',
     '/static/img/background_first_page.webp',
     '/static/img/keks_rojdestvenskii_s_mandarinami.webp',
     '/static/img/kurica_s_sirom_v_duhovke.webp',
     '/static/img/pechenie_mordashki.webp',
     '/static/img/pie.webp',
-    '/static/img/favicon.ico',
-    '/static/webfonts/fa-solid-900.woff2'
+    '/static/img/favicon.ico'
 ];
 
 self.addEventListener('install', function (event) {
