@@ -1,4 +1,4 @@
-"""Тесты для различных ошибок в приложении """
+"""Тесты для различных ошибок в приложении"""
 from app.orm_db_actions import search_dishes
 from app.utils import TypesOfDish
 from test import BaseTestCase
@@ -8,6 +8,7 @@ class ErrorTestCase(BaseTestCase):
     """Класс для тест-кейсов ошибок в приложении"""
 
     def test_not_found_error(self):
+        """Тестирование ошибки 404 Not Found"""
         r = self.client.get('/ab')
         self.assertEqual(r.status_code, 404)
         self.assertTrue('<title>404 Not Found Error</title>' in r.get_data(as_text=True))
@@ -15,6 +16,7 @@ class ErrorTestCase(BaseTestCase):
                         in r.get_data(as_text=True))
 
     def test_csrf_error(self):
+        """Тестирование ошибки CSRF Error 400 (Bad Request)"""
         with self.app.test_request_context() as ctx:
             dish_name = 'Кекс рождественский с мандаринами'
             r = self.client.post('/delete', data={'dish_name': dish_name})

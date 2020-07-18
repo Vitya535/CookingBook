@@ -36,6 +36,17 @@ class Dish(db.Model):
     ingredients = db.relationship('Ingredient', secondary=DISH_AND_INGREDIENT,
                                   backref=db.backref('dishes', lazy='dynamic'))
 
+
+    def to_dict(self) -> dict:
+        dish_data = {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'portion_count': self.portion_count,
+            'type_of_dish': self.type_of_dish
+        }
+        return dish_data
+
     def __init__(self, description, name, portion_count, type_of_dish):
         self.description = description
         self.name = name
@@ -105,9 +116,7 @@ class Recipe(db.Model):
                                     nullable=False)
     time_on_cooking = db.Column(db.String, CheckConstraint('time_on_cooking>0'),
                                 nullable=False)
-    dish_id = db.Column(db.Integer,
-                        db.ForeignKey('dish.id', ondelete="CASCADE", onupdate="CASCADE"),
-                        nullable=False)
+    dish_id = db.Column(db.Integer, db.ForeignKey('dish.id', ondelete="CASCADE", onupdate="CASCADE"))
     steps_of_cook = db.relationship('StepOfCook', backref='recipe')
     implements = db.relationship('Implement', secondary=RECIPE_AND_IMPLEMENT,
                                  backref=db.backref('recipes', lazy='dynamic'))

@@ -15,7 +15,7 @@ class Config:
     WTF_CSRF_ENABLED = CDN_HTTPS = SESSION_COOKIE_HTTPONLY = True
     SECRET_KEY = urandom(16)
     SQLALCHEMY_DATABASE_URI = f'sqlite:///{join(BASEDIR, APP_DB_RELPATH)}'
-    CDN_TIMESTAMP = False
+    CDN_TIMESTAMP = JSON_AS_ASCII = False
     CDN_DOMAIN = 'cdnjs.cloudflare.com'
     CDN_ENDPOINTS = ('ajax/libs/jquery/3.5.1/jquery.min.js',
                      'ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js',

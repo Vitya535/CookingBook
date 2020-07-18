@@ -32,6 +32,9 @@ def create_app():
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
 
+    from app.api import bp as api_bp
+    app.register_blueprint(api_bp, url_prefix='/api')
+
     init_logs(app)
 
     ASSETS.init_app(app)
