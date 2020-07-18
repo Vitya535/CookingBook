@@ -21,13 +21,14 @@ class BaseTestCase(TestCase):
         self.app_ctx = self.app.app_context()
         self.app_ctx.push()
         self.client = self.app.test_client(use_cookies=True)
-        db.create_all()
+        self.db = db
+        self.db.create_all()
         self.populate_db()
 
     def tearDown(self):
         """Очистка параметров после каждого теста"""
-        db.session.remove()
-        db.drop_all()
+        self.db.session.remove()
+        self.db.drop_all()
         self.app_ctx.pop()
 
     def populate_db(self):
@@ -93,17 +94,17 @@ class BaseTestCase(TestCase):
                             Ingredient("Веточка розмарина", 1, UnitsOfMeasurement.SHTUKI),
                             Ingredient("Сахарная пудра", 1, UnitsOfMeasurement.TABLE_SPOON))
         for dish in self.dishes:
-            db.session.add(dish)
-            db.session.commit()
+            self.db.session.add(dish)
+            self.db.session.commit()
         for recipe in self.recipes:
-            db.session.add(recipe)
-            db.session.commit()
+            self.db.session.add(recipe)
+            self.db.session.commit()
         for implement in self.implements:
-            db.session.add(implement)
-            db.session.commit()
+            self.db.session.add(implement)
+            self.db.session.commit()
         for step_of_cook in self.steps_of_cook:
-            db.session.add(step_of_cook)
-            db.session.commit()
+            self.db.session.add(step_of_cook)
+            self.db.session.commit()
         for ingredient in self.ingredients:
-            db.session.add(ingredient)
-            db.session.commit()
+            self.db.session.add(ingredient)
+            self.db.session.commit()

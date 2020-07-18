@@ -12,6 +12,16 @@ class ApiTestCase(BaseTestCase):
         self.assertEqual(r.headers['Content-Type'], 'application/json')
         self.assertEqual(r.get_json(), list(dish.to_dict() for dish in self.dishes))
 
+        self.db.drop_all()
+
+        r = self.client.get('/api/dishes/')
+        self.assertEqual(r.status_code, 404)
+        self.assertEqual(r.headers['Content-Type'], 'text/html; charset=utf-8')
+        self.assertEqual(r.get_json(), None)
+        self.assertTrue('<title>404 Not Found Error</title>' in r.get_data(as_text=True))
+        self.assertTrue('<h1>Пичалька, вы неправильно ввели URL для нашего сайта кулинарной книги</h1>'
+                        in r.get_data(as_text=True))
+
     def test_get_dish_by_id(self):
         """Тестирование GET запроса в API для получения блюда по его id"""
         r = self.client.get('/api/dishes/1')
