@@ -76,7 +76,7 @@ class LocalizationTestCase(BaseTestCase):
             self.assertEqual(result, [])
             self.assertEqual(r.status_code, 200)
 
-    def test_get_dishes_by_type(self):
+    def test_localization_get_dishes_by_type(self):
         """Тест SQL запроса на получение определенного типа блюд с локализацией"""
         with self.app.test_request_context() as ctx:
             result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, '')
@@ -91,7 +91,7 @@ class LocalizationTestCase(BaseTestCase):
             expected = []
             self.assertEqual(expected, result)
 
-    def test_get_dishes_by_type_and_name(self):
+    def test_localization_get_dishes_by_type_and_name(self):
         """Тест SQL запроса на получение определенного типа блюд, совпадающих с вхождением названия с локализацией"""
         with self.app.test_request_context() as ctx:
             expected = list(self.dishes[1:3])
@@ -106,7 +106,7 @@ class LocalizationTestCase(BaseTestCase):
             result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, 'к')
             self.assertEqual(expected, result)
 
-    def test_delete_dish_by_name(self):
+    def test_localization_delete_dish_by_name(self):
         """Тест SQL запроса на удаление блюда по его полному названию с локализацией"""
         with self.app.test_request_context() as ctx:
             delete_dish('Christmas cupcake with tangerines')
