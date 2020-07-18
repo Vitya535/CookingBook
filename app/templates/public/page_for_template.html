@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#317EFB"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {% block title %}
-        <title>{{ title }}</title>
+        <title>{{ gettext(title) }}</title>
     {% endblock %}
     <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
@@ -51,7 +51,7 @@
 <body>
 <nav class="navbar navbar-expand fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('main.show_first_page') }}">Кулинарная книга</a>
+        <a class="navbar-brand" href="{{ url_for('main.show_first_page') }}">{{ gettext('Кулинарная книга') }}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -59,19 +59,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
-                    Блюда
+                    {{ gettext('Блюда') }}
                     <b class="caret"></b>
                 </a>
                 {% block nav_menu %}
                     <div class="dropdown-menu">
                         {% for type in types_of_dish %}
                             <a class="dropdown-item"
-                               href="{{ url_for('main.show_dishes', type_of_dishes=type.name|lower) }}">{{ type.value }}</a>
+                               href="{{ url_for('main.show_dishes', type_of_dishes=type.name|lower) }}">{{ gettext(type.value) }}</a>
                         {% endfor %}
                     </div>
                 {% endblock %}
             </div>
-            <a class="nav-link" href="{{ url_for('main.show_about') }}">О проекте</a>
+            <a class="nav-link" href="{{ url_for('main.show_about') }}">{{ gettext('О проекте') }}</a>
         </div>
     </div>
 </nav>

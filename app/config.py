@@ -4,8 +4,9 @@ from os.path import dirname
 from os.path import join
 
 BASEDIR = dirname(__file__)
-APP_DB_RELPATH = "cooking_book.db"
+APP_DB_RELPATH = 'cooking_book.db'
 TEST_DB_RELPATH = '../test/test.db'
+TRANSLATION_DIR_RELPATH = '../translations'
 
 
 class Config:
@@ -21,6 +22,9 @@ class Config:
                      'ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js',
                      'ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css',
                      'ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css')
+    BABEL_DEFAULT_LOCALE = 'ru'
+    LANGUAGES = ('ru', 'en')
+    BABEL_TRANSLATION_DIRECTORIES = join(BASEDIR, TRANSLATION_DIR_RELPATH)
 
 
 class ProductionConfig(Config):

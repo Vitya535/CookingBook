@@ -15,11 +15,15 @@ class ErrorTestCase(BaseTestCase):
                         in r.get_data(as_text=True))
 
     def test_csrf_error(self):
-        dish_name = 'Кекс рождественский с мандаринами'
-        r = self.client.post('/delete', data={'dish_name': dish_name})
-        result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, dish_name)
-        expected = [self.dishes[2]]
-        self.assertEqual(result, expected)
-        self.assertTrue(r.headers.get('X-CSRFToken') is None)
-        self.assertEqual(r.status_code, 400)
-        self.assertTrue("<h1>К сожалению, на странице произошла CSRF-ошибка. Приносим извинения за доставленные неудобства</h1>" in r.get_data(as_text=True))
+        with self.app.test_request_context() as ctx:
+            dish_name = 'Кекс рождественский с мандаринами'
+            r = self.client.post('/delete', data={'dish_name': dish_name})
+            result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, dish_name)
+            expected = [self.dishes[2]]
+            self.assertEqual(result, expected)
+            self.assertTrue(r.headers.get('X-CSRFToken') is None)
+            self.assertEqual(r.status_code, 400)
+            self.assertTrue('<title>Csrf Error</title>' in r.get_data(as_text=True))
+            self.assertTrue(
+            "<h1>К сожалению, на странице произошла CSRF-ошибка. Приносим извинения за доставленные неудобства</h1>" in r.get_data(
+                as_text=True))

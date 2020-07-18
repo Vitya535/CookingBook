@@ -1,7 +1,7 @@
 {% extends 'public/page_for_template.html' %}
 
 {% block title %}
-    <title>{{ selected_dish }}</title>
+    <title>{{ gettext(selected_dish) }}</title>
 {% endblock %}
 
 {% block variable_css %}
@@ -44,10 +44,10 @@
         {% for type in types_of_dish %}
             {% if type.value == selected_dish %}
                 <a class="dropdown-item active"
-                   href="{{ url_for('main.show_dishes', type_of_dishes=type.name|lower) }}">{{ type.value }}</a>
+                   href="{{ url_for('main.show_dishes', type_of_dishes=type.name|lower) }}">{{ gettext(type.value) }}</a>
             {% else %}
                 <a class="dropdown-item"
-                   href="{{ url_for('main.show_dishes', type_of_dishes=type.name|lower) }}">{{ type.value }}</a>
+                   href="{{ url_for('main.show_dishes', type_of_dishes=type.name|lower) }}">{{ gettext(type.value) }}</a>
             {% endif %}
         {% endfor %}
     </div>
@@ -67,11 +67,11 @@
                 </form>
             </div>
             <div class="col text-center">
-                <h4>{{ selected_dish }}</h4>
+                <h4>{{ gettext(selected_dish) }}</h4>
             </div>
             <div class="col mr-1">
                 <button class="btn btn-light float-right font-weight-bold text-dark" data-toggle="modal" data-target="#modal_for_add">
-                    Добавить блюдо
+                    {{ gettext('Добавить блюдо') }}
                 </button>
             </div>
         </div>
@@ -79,52 +79,55 @@
         {% for dish_info in dishes_info %}
             <div class="row border-bottom border-dark">
                 <div class="col border-right border-dark">
-                    <p class="font-weight-bold h3">{{ dish_info.name }}</p>
-                    <p>Количество порций: {{ dish_info.portion_count }}</p>
-                    <button title="Удаление блюда" class="btn btn-danger" type="submit">
+                    <p class="font-weight-bold h3">{{ gettext(dish_info.name) }}</p>
+                    <p>{{ gettext('Количество порций:') }} {{ dish_info.portion_count }}</p>
+                    <button title="{{ gettext('Удаление блюда') }}" class="btn btn-danger" type="submit">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                             <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                         </svg>
                     </button>
-                    <button title="Редактирование блюда" class="btn btn-warning" type="submit">
+                    <button title="{{ gettext('Редактирование блюда') }}" class="btn btn-warning" type="submit">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M11.293 1.293a1 1 0 0 1 1.414 0l2 2a1 1 0 0 1 0 1.414l-9 9a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"/>
                             <path fill-rule="evenodd" d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 0 0 .5.5H4v.5a.5.5 0 0 0 .5.5H5v.5a.5.5 0 0 0 .5.5H6v-1.5a.5.5 0 0 0-.5-.5H5v-.5a.5.5 0 0 0-.5-.5H3z"/>
                         </svg>
                     </button>
-                    <img type="image/webp" src="{{ dish_info.recipes[0].img_url }}" class="img-fluid mt-2" alt="Изображение блюда" sizes="50vw">
-                    <p>Описание: {{ dish_info.description }}</p>
-                    <p>Время подготовки: {{ dish_info.recipes[0].time_on_preparation }}</p>
-                    <p>Время приготовления: {{ dish_info.recipes[0].time_on_cooking }}</p>
-                    <p>Ссылка на литературу:
+                    <img type="image/webp" src="{{ dish_info.recipes[0].img_url }}" class="img-fluid mt-2" alt="{{ gettext('Изображение блюда') }}" sizes="50vw">
+                    <p>{{ gettext('Описание:') }} {{ gettext(dish_info.description) }}</p>
+                    <p>{{ gettext('Время подготовки:') }} {{ gettext(dish_info.recipes[0].time_on_preparation) }}</p>
+                    <p>{{ gettext('Время приготовления:') }} {{ gettext(dish_info.recipes[0].time_on_cooking) }}</p>
+                    <p>{{ gettext('Ссылка на литературу:') }}
                         <a href="{{ dish_info.recipes[0].literature_url }}" class="text-dark font-weight-bold">
                             {{ dish_info.recipes[0].literature_url }}
                         </a>
                     </p>
                 </div>
                 <div class="col border-right border-dark">
-                    <p class="font-weight-bold h3">Утварь:</p>
+                    <p class="font-weight-bold h3">{{ gettext('Утварь:') }}</p>
                     {% for implement in dish_info.recipes[0].implements %}
-                        <p>{{ implement.name }}</p>
+                        <p>{{ gettext(implement.name) }}</p>
                     {% endfor %}
                 </div>
                 <div class="col border-right border-dark">
-                    <p class="font-weight-bold h3">Способ приготовления:</p>
+                    <p class="font-weight-bold h3">{{ gettext('Способ приготовления:') }}</p>
                     {% for step_of_cook in dish_info.recipes[0].steps_of_cook %}
-                        <p>{{ step_of_cook.number_of_step }}. {{ step_of_cook.description }}</p>
+                        <p>{{ step_of_cook.number_of_step }}. {{ gettext(step_of_cook.description) }}</p>
                     {% endfor %}
                 </div>
                 <div class="col">
-                    <p class="font-weight-bold h3">Ингредиенты:</p>
+                    <p class="font-weight-bold h3">{{ gettext('Ингредиенты:') }}</p>
                     {% for ingredient in dish_info.ingredients %}
-                        <p>{{ ingredient.name }} - {{ ingredient.count }} {{ ingredient.unit_of_measurement.value }}</p>
+                        <p>{{ gettext(ingredient.name) }} - {{ ingredient.count }} {{ gettext(ingredient.unit_of_measurement.value) }}</p>
                     {% endfor %}
                 </div>
             </div>
         {% endfor %}
         <button class="btn-lg btn-success mr-5 mb-5" id="back-top" type="submit" aria-label="back-top">
-            <i class="fa fa-arrow-up"></i>
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg" font-size="2em">
+              <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
+              <path fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8 3.707 5.354 6.354a.5.5 0 1 1-.708-.708l3-3z"/>
+            </svg>
         </button>
     </div>
 {% endblock %}

@@ -6,10 +6,13 @@ from logging.handlers import RotatingFileHandler
 from os.path import dirname
 
 from flask import Flask
+from flask import current_app
+from flask import request
 from flask.logging import create_logger
 
 from app.assets import ASSETS
 from app.errors import handlers
+from app.extensions import babel
 from app.extensions import cdn
 from app.extensions import compress
 from app.extensions import csrf
@@ -37,6 +40,7 @@ def create_app():
     csrf.init_app(app)
     cdn.init_app(app)
     compress.init_app(app)
+    babel.init_app(app)
     TALISMAN.init_app(app, content_security_policy=CSP, force_https=False)
 
     return app
@@ -56,3 +60,8 @@ def init_logs(app):
     error_handler.setLevel(ERROR)
     error_handler.setFormatter(formatter)
     logs.addHandler(error_handler)
+
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(current_app.config['LANGUAGES'])

@@ -1,3 +1,4 @@
+from flask_babel import Babel
 from flask_cdn import CDN
 from flask_compress import Compress
 from flask_session import Session
@@ -9,3 +10,4 @@ db = SQLAlchemy()
 csrf = CSRFProtect()
 cdn = CDN()
 compress = Compress()
+babel = Babel()
