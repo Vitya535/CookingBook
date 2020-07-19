@@ -10,6 +10,7 @@ from app.orm_db_actions import Dish
 
 @bp.route('/dishes')
 def get_all_dishes():
+    """GET запрос, достающий все блюда, которые есть в БД"""
     dishes_dict = tuple(dish.to_dict() for dish in Dish.query.all())
     if not dishes_dict:
         abort(404)
@@ -18,11 +19,13 @@ def get_all_dishes():
 
 @bp.route('/dishes/<int:dish_id>')
 def get_dish(dish_id: int):
+    """GET запрос, достающий блюдо по его id, если оно есть в базе"""
     return jsonify(Dish.query.get_or_404(dish_id).to_dict())
 
 
 @bp.route('/dishes', methods=['POST'])
 def create_dish():
+    """POST запрос, создающий блюдо по JSON, который приходит на вход"""
     data = request.get_json() or {}
     if 'name' not in data or 'description' not in data or 'portion_count' not in data or 'type_of_dish' not in data:
         abort(400)
@@ -39,6 +42,7 @@ def create_dish():
 
 @bp.route('/dishes/<int:dish_id>', methods=['PUT'])
 def update_dish(dish_id: int):
+    """PUT запрос, редактирующий данные о блюде по JSON, который приходит на вход"""
     dish = Dish.query.get_or_404(dish_id)
     data = request.get_json() or {}
     if 'name' not in data or 'description' not in data or 'portion_count' not in data or 'type_of_dish' not in data:
@@ -57,6 +61,7 @@ def update_dish(dish_id: int):
 
 @bp.route('/dishes/<int:dish_id>', methods=['DELETE'])
 def delete_dish(dish_id: int):
+    """DELETE запрос, удаляющий данные о блюде с id, который приходит на вход"""
     dish = Dish.query.get_or_404(dish_id)
     db.session.delete(dish)
     db.session.commit()

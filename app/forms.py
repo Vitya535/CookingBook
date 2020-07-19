@@ -28,6 +28,7 @@ class ButtonField(StringField):
 
 
 class DishSearchForm(Form):
+    """Форма для поиска блюд по его названию"""
     dish_name = StringField(lazy_gettext('Название блюда'),
                             [DataRequired(),
                              Length(min=1, max=50)],

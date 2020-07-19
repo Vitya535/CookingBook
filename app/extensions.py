@@ -1,3 +1,4 @@
+"""Расширения, необходимые для работы приложения"""
 from flask_babel import Babel
 from flask_cdn import CDN
 from flask_compress import Compress

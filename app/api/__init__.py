@@ -1,3 +1,4 @@
+"""Инициализация маршрутов для API в приложении"""
 from flask import Blueprint
 
 bp = Blueprint('api', __name__)

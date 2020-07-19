@@ -1,4 +1,4 @@
-"""Основной файл приложения"""
+"""Основные маршруты приложения"""
 from html import escape
 
 from flask import current_app
@@ -17,6 +17,7 @@ from app.utils import UnitsOfMeasurement
 
 @bp.after_request
 def add_header(response):
+    """Функция, вставляющая после каждого запроса заголовок STS для безопасности данных"""
     response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
     response.cache_control.max_age = 31536000
     return response
@@ -24,6 +25,7 @@ def add_header(response):
 
 @bp.context_processor
 def inject_common_template_params() -> dict:
+    """Общая функция, необходимая для вставки общих параметров для шаблонов"""
     return dict(types_of_dish=TypesOfDish)
 
 

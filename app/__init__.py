@@ -23,6 +23,7 @@ from app.security import TALISMAN
 
 
 def create_app():
+    """Функция, реализующая паттерн Application Factory (нужна для создания экземпляра приложения с нужной конфигурацией)"""
     app = Flask(__name__)
     app.config.from_object(f'app.config.{app.config["ENV"]}Config')
 
@@ -50,6 +51,7 @@ def create_app():
 
 
 def init_logs(app):
+    """Функция для инициализации логов для приложения"""
     logs = create_logger(app)
 
     formatter = Formatter("%(asctime)s - %(filename)s - %(funcName)s - %(levelname)s - %(message)s",
@@ -67,4 +69,5 @@ def init_logs(app):
 
 @babel.localeselector
 def get_locale():
+    """Функция для получения подходящей локали для приложения"""
     return request.accept_languages.best_match(current_app.config['LANGUAGES'])
