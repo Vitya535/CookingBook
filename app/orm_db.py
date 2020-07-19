@@ -47,7 +47,13 @@ class Dish(db.Model):
         }
         return dish_data
 
-    def __init__(self, description, name, portion_count, type_of_dish):
+
+    def from_dict(self, data):
+        for field in ('name', 'description', 'portion_count', 'type_of_dish'):
+            if field in data:
+                setattr(self, field, data[field])
+
+    def __init__(self, description=None, name=None, portion_count=None, type_of_dish=None):
         self.description = description
         self.name = name
         self.portion_count = portion_count

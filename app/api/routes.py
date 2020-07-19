@@ -12,8 +12,6 @@ from app.orm_db_actions import Dish
 def get_all_dishes():
     """GET запрос, достающий все блюда, которые есть в БД"""
     dishes_dict = tuple(dish.to_dict() for dish in Dish.query.all())
-    if not dishes_dict:
-        abort(404)
     return jsonify(dishes_dict)
 
 
@@ -27,17 +25,16 @@ def get_dish(dish_id: int):
 def create_dish():
     """POST запрос, создающий блюдо по JSON, который приходит на вход"""
     data = request.get_json() or {}
-    if 'name' not in data or 'description' not in data or 'portion_count' not in data or 'type_of_dish' not in data:
+    dish_attrs = ('name', 'description', 'portion_count', 'type_of_dish')
+    if not all(attribute in data for attribute in dish_attrs):
         abort(400)
-    if Dish.query.filter_by(name=data['name']).first():
+    if Dish.query.filter((Dish.name == data['name']) | (Dish.description == data['description'])).first():
         abort(400)
-    if Dish.query.filter_by(description=data['description']).first():
-        abort(400)
-    new_dish = Dish(data['description'], data['name'], data['portion_count'], data['type_of_dish'])
-    db.session.add(new_dish)
+    dish = Dish()
+    dish.from_dict(data)
+    db.session.add(dish)
     db.session.commit()
-    return jsonify(new_dish.to_dict()), 201
-
+    return jsonify(dish.to_dict()), 201
 
 
 @bp.route('/dishes/<int:dish_id>', methods=['PUT'])
@@ -45,16 +42,12 @@ def update_dish(dish_id: int):
     """PUT запрос, редактирующий данные о блюде по JSON, который приходит на вход"""
     dish = Dish.query.get_or_404(dish_id)
     data = request.get_json() or {}
-    if 'name' not in data or 'description' not in data or 'portion_count' not in data or 'type_of_dish' not in data:
+    dish_attrs = ('name', 'description', 'portion_count', 'type_of_dish')
+    if not all(attribute in data for attribute in dish_attrs):
         abort(400)
-    if Dish.query.filter_by(name=data['name']).first():
+    if Dish.query.filter((Dish.name == data['name']) | (Dish.description == data['description'])).first():
         abort(400)
-    if Dish.query.filter_by(description=data['description']).first():
-        abort(400)
-    dish.description = data['description']
-    dish.name = data['name']
-    dish.portion_count = data['portion_count']
-    dish.type_of_dish = data['type_of_dish']
+    dish.from_dict(data)
     db.session.commit()
     return jsonify(dish.to_dict())
 

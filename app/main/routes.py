@@ -1,6 +1,4 @@
 """Основные маршруты приложения"""
-from html import escape
-
 from flask import current_app
 from flask import jsonify
 from flask import render_template
@@ -13,14 +11,6 @@ from app.orm_db_actions import delete_dish
 from app.orm_db_actions import search_dishes
 from app.utils import TypesOfDish
 from app.utils import UnitsOfMeasurement
-
-
-@bp.after_request
-def add_header(response):
-    """Функция, вставляющая после каждого запроса заголовок STS для безопасности данных"""
-    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
-    response.cache_control.max_age = 31536000
-    return response
 
 
 @bp.context_processor
@@ -47,7 +37,7 @@ def show_dishes(type_of_dishes: str) -> str:
 @bp.route('/delete', methods=['POST'])
 def delete_dish_info():
     """Функция для удаления блюда из БД"""
-    dish_name = escape(request.values.get('dish_name'))
+    dish_name = request.values.get('dish_name')
     current_app.logger.debug(f'Enter into {delete_dish_info.__name__} with dish_name={dish_name}')
     delete_dish(dish_name)
     return jsonify()

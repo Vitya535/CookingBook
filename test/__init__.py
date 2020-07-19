@@ -20,7 +20,7 @@ class BaseTestCase(TestCase):
         self.app = create_app()
         self.app_ctx = self.app.app_context()
         self.app_ctx.push()
-        self.client = self.app.test_client(use_cookies=True)
+        self.client = self.app.test_client()
         self.db = db
         self.db.create_all()
         self.populate_db()

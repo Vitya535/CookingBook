@@ -56,12 +56,16 @@ def init_logs(app):
 
     formatter = Formatter("%(asctime)s - %(filename)s - %(funcName)s - %(levelname)s - %(message)s",
                           "%Y-%m-%d %H:%M:%S")
-    debug_handler = RotatingFileHandler(f'{dirname(__file__)}/logs/debug.log', maxBytes=100000, backupCount=5)
+    debug_handler = RotatingFileHandler(f'{dirname(__file__)}/logs/debug.log',
+                                        maxBytes=100000,
+                                        backupCount=5)
     debug_handler.setLevel(DEBUG)
     debug_handler.setFormatter(formatter)
     logs.addHandler(debug_handler)
 
-    error_handler = RotatingFileHandler(f'{dirname(__file__)}/logs/error.log', maxBytes=100000, backupCount=5)
+    error_handler = RotatingFileHandler(f'{dirname(__file__)}/logs/error.log',
+                                        maxBytes=100000,
+                                        backupCount=5)
     error_handler.setLevel(ERROR)
     error_handler.setFormatter(formatter)
     logs.addHandler(error_handler)

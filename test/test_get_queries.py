@@ -36,15 +36,3 @@ class GetQueriesTestCase(BaseTestCase):
         r = self.client.get('/dishes/sweet_food_and_drinks?dish_name=мандарины')
         self.assertEqual(r.status_code, 200)
         self.assertTrue('<title>Сладкие блюда и напитки</title>' in r.get_data(as_text=True))
-
-    def test_get_service_worker(self):
-        """Тест GET запроса для получения sw.js (service worker)"""
-        r = self.client.get('/static/js/sw.js')
-        self.assertEqual(r.headers.get('Content-Type'), 'application/javascript; charset=utf-8')
-        self.assertEqual(r.status_code, 200)
-
-    def test_get_robots_txt_file(self):
-        """Тест GET запроса для получения файла robots.txt"""
-        r = self.client.get('/static/robots.txt')
-        self.assertEqual(r.headers.get('Content-Type'), 'text/plain; charset=utf-8')
-        self.assertEqual(r.status_code, 200)

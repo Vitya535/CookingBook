@@ -22,6 +22,7 @@ class ErrorTestCase(BaseTestCase):
             r = self.client.post('/delete', data={'dish_name': dish_name})
             result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, dish_name)
             expected = [self.dishes[2]]
+            self.assertTrue(r.get_json() is None)
             self.assertEqual(result, expected)
             self.assertTrue(r.headers.get('X-CSRFToken') is None)
             self.assertEqual(r.status_code, 400)
