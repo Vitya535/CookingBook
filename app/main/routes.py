@@ -1,8 +1,10 @@
 """Основные маршруты приложения"""
+from flask import Markup
 from flask import current_app
 from flask import jsonify
 from flask import render_template
 from flask import request
+from flask_babel import gettext
 from htmlmin import minify
 
 from app.forms import DishSearchForm
@@ -47,13 +49,18 @@ def delete_dish_info():
 def show_first_page() -> str:
     """Функция для показа главной странички приложения"""
     current_app.logger.debug(f'Enter into {show_first_page.__name__}')
-    return minify(render_template('public/first_page.html',
-                                  title='Кулинарная книга'))
+    return minify(render_template('public/first_and_about_page.html',
+                                  title='Кулинарная книга',
+                                  content=Markup(f'{gettext("Добро пожаловать в кулинарную книгу!!!")}'
+                                                 f'<p class="h5">{gettext("Здесь вы найдете множество различных рецептов! Надеюсь, что вы найдете блюда, которые придутся вам по душе!")}</p>')))
 
 
 @bp.route('/about')
 def show_about() -> str:
     """Функция для показа странички 'О приложении'"""
     current_app.logger.debug(f'Enter into {show_about.__name__}')
-    return minify(render_template('public/about.html',
-                                  title='О проекте'))
+    return minify(render_template('public/first_and_about_page.html',
+                                  title='О проекте',
+                                  content=Markup(f'{gettext("О проекте:")}'
+                                                 f'<p class="h5">{gettext("Рецепты взяты из книг и интернета :)")}</p>'
+                                                 f'<p class="h5">{gettext("Автор: Кушнеренко Виктор")}</p>')))

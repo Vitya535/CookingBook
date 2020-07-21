@@ -11,7 +11,6 @@ from flask import request
 from flask.logging import create_logger
 
 from app.assets import ASSETS
-from app.errors import handlers
 from app.extensions import babel
 from app.extensions import cdn
 from app.extensions import compress

@@ -6,59 +6,28 @@
 
 {% block variable_css %}
     <style type="text/css">
-        div.search_and_add
-        {
-            background: blue;
+        div.search_with_header {
             top: 56px;
-            height: 46px;
-            z-index: 1029;
+            z-index: 1009;
         }
 
-        p
-        {
+        p {
             font-family: 'Charm', cursive;
         }
 
-        div.content
-        {
-            position: relative;
-            top: 110px;
-        }
-
-        h4
-        {
-            color: white;
-        }
-
-        #back-top
-        {
-            position: fixed;
-            bottom: 0;
-            right: 0;
+        #back-top {
+            left: auto;
         }
     </style>
 {% endblock %}
 
-{% block nav_menu %}
-    <div class="dropdown-menu">
-        {% for type in types_of_dish %}
-            {% if type.value == selected_dish %}
-                <a class="dropdown-item active"
-                   href="{{ url_for('main.show_dishes', type_of_dishes=type.name|lower) }}">{{ gettext(type.value) }}</a>
-            {% else %}
-                <a class="dropdown-item"
-                   href="{{ url_for('main.show_dishes', type_of_dishes=type.name|lower) }}">{{ gettext(type.value) }}</a>
-            {% endif %}
-        {% endfor %}
-    </div>
-{% endblock %}
-
 {% block content %}
-    <div class="container-fluid content">
-        <div class="row fixed-top search_and_add align-items-center">
-            <div class="col ml-1">
-                <form class="form-inline" method="GET" action="{{ url_for('main.show_dishes', type_of_dishes=type_of_dishes|lower) }}">
-                    <div class="input-group">
+    <div class="container-fluid">
+        <div class="row py-1 bg-primary position-sticky search_with_header">
+            <div class="col-lg-4 col-xs-12 col-sm-12 col-md-12 ml-lg-1 pl-lg-0">
+                <form class="form-inline" method="GET"
+                      action="{{ url_for('main.show_dishes', type_of_dishes=type_of_dishes|lower) }}">
+                    <div class="input-group w-100">
                         {{ dish_search_form.dish_name }}
                         <div class="input-group-append">
                             {{ dish_search_form.button_search }}
@@ -66,205 +35,65 @@
                     </div>
                 </form>
             </div>
-            <div class="col text-center">
-                <h4>{{ gettext(selected_dish) }}</h4>
-            </div>
-            <div class="col mr-1">
-                <button class="btn btn-light float-right font-weight-bold text-dark" data-toggle="modal" data-target="#modal_for_add">
-                    {{ gettext('Добавить блюдо') }}
-                </button>
+            <div class="col-lg-4 text-center">
+                <h4 class="text-white">{{ gettext(selected_dish) }}</h4>
             </div>
         </div>
-
         {% for dish_info in dishes_info %}
             <div class="row border-bottom border-dark">
                 <div class="col border-right border-dark">
                     <p class="font-weight-bold h3">{{ gettext(dish_info.name) }}</p>
                     <p>{{ gettext('Количество порций:') }} {{ dish_info.portion_count }}</p>
                     <button title="{{ gettext('Удаление блюда') }}" class="btn btn-danger" type="submit">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
+                             xmlns="http://www.w3.org/2000/svg">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                            <path fill-rule="evenodd"
+                                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                         </svg>
                     </button>
-                    <button title="{{ gettext('Редактирование блюда') }}" class="btn btn-warning" type="submit">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M11.293 1.293a1 1 0 0 1 1.414 0l2 2a1 1 0 0 1 0 1.414l-9 9a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"/>
-                            <path fill-rule="evenodd" d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 0 0 .5.5H4v.5a.5.5 0 0 0 .5.5H5v.5a.5.5 0 0 0 .5.5H6v-1.5a.5.5 0 0 0-.5-.5H5v-.5a.5.5 0 0 0-.5-.5H3z"/>
-                        </svg>
-                    </button>
-                    <img type="image/webp" src="{{ dish_info.recipes[0].img_url }}" class="img-fluid mt-2" alt="{{ gettext('Изображение блюда') }}" sizes="50vw">
+                    <img type="image/webp" src="{{ dish_info.recipes[0].img_url }}" class="img-fluid mt-2"
+                         alt="{{ gettext('Изображение блюда') }}">
                     <p>{{ gettext('Описание:') }} {{ gettext(dish_info.description) }}</p>
                     <p>{{ gettext('Время подготовки:') }} {{ gettext(dish_info.recipes[0].time_on_preparation) }}</p>
                     <p>{{ gettext('Время приготовления:') }} {{ gettext(dish_info.recipes[0].time_on_cooking) }}</p>
                     <p>{{ gettext('Ссылка на литературу:') }}
-                        <a href="{{ dish_info.recipes[0].literature_url }}" class="text-dark font-weight-bold">
+                        <a href="{{ dish_info.recipes[0].literature_url }}"
+                           class="text-dark font-weight-bold text-break">
                             {{ dish_info.recipes[0].literature_url }}
                         </a>
                     </p>
                 </div>
-                <div class="col border-right border-dark">
+                <div class="col-md border-right border-dark">
                     <p class="font-weight-bold h3">{{ gettext('Утварь:') }}</p>
                     {% for implement in dish_info.recipes[0].implements %}
                         <p>{{ gettext(implement.name) }}</p>
                     {% endfor %}
                 </div>
-                <div class="col border-right border-dark">
+                <div class="col-md border-right border-dark">
                     <p class="font-weight-bold h3">{{ gettext('Способ приготовления:') }}</p>
                     {% for step_of_cook in dish_info.recipes[0].steps_of_cook %}
                         <p>{{ step_of_cook.number_of_step }}. {{ gettext(step_of_cook.description) }}</p>
                     {% endfor %}
                 </div>
-                <div class="col">
+                <div class="col-md">
                     <p class="font-weight-bold h3">{{ gettext('Ингредиенты:') }}</p>
                     {% for ingredient in dish_info.ingredients %}
-                        <p>{{ gettext(ingredient.name) }} - {{ ingredient.count }} {{ gettext(ingredient.unit_of_measurement.value) }}</p>
+                        <p>{{ gettext(ingredient.name) }}
+                            - {{ ingredient.count }} {{ gettext(ingredient.unit_of_measurement.value) }}</p>
                     {% endfor %}
                 </div>
             </div>
         {% endfor %}
-        <button class="btn-lg btn-success mr-5 mb-5" id="back-top" type="submit" aria-label="back-top">
-            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg" font-size="2em">
-              <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
-              <path fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8 3.707 5.354 6.354a.5.5 0 1 1-.708-.708l3-3z"/>
+        <button class="btn-lg btn-success mr-xl-5 mb-xl-5 mr-3 mb-3 fixed-bottom" id="back-top" type="submit" aria-label="back-top">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg" font-size="2em">
+                <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
+                <path fill-rule="evenodd"
+                      d="M7.646 2.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8 3.707 5.354 6.354a.5.5 0 1 1-.708-.708l3-3z"/>
             </svg>
         </button>
     </div>
-{% endblock %}
-
-{% block modal_windows %}
-    {% block modal_for_add %}
-        <div class="modal fade" id="modal_for_add" tabindex="-1" role="dialog" aria-labelledby="add_label"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="add_label">Добавление блюда</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form_for_add" action="#" method="post">
-                            <h5>О блюде:</h5>
-                            <div class="form-group">
-                                <label>Тип блюда:</label>
-                                <label>
-                                    <select class="dropdown">
-                                        {% for type in types_of_dish %}
-                                            <option>{{ type.value }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>Название блюда:</label>
-                                <label for="name_of_dish"></label>
-                                <input id="name_of_dish" class="form-control" name="name_of_dish" maxlength="40"
-                                       pattern="/^[А-ЯЁ][а-яё]*$/" required type="text"
-                                       placeholder="Пирожки слоеные с фаршем из печени">
-                            </div>
-                            <div class="form-group">
-                                <label>Количество порций:</label>
-                                <label for="portion_count"></label>
-                                <input id="portion_count" class="form-control" name="portion_count" min="1" max="20"
-                                       pattern="/^\d+$/" required type="number" placeholder="5">
-                            </div>
-                            <div class="form-group">
-                                <label>Описание:</label>
-                                <label for="description_of_dish"></label>
-                                <input id="description_of_dish" size="3" class="form-control" name="description_of_dish"
-                                       maxlength="300" pattern="/^[А-ЯЁ][а-яё]*$/" required type="text"
-                                       placeholder="Это блюдо восхитительно!">
-                            </div>
-
-                            <h5>О рецепте:</h5>
-                            <div class="form-group">
-                                <label>Изображение блюда:</label>
-                                <input id="img_of_dish" class="form-control" name="dish_image" required type="file">
-                            </div>
-                            <div class="form-group">
-                                <label>Время подготовки: (в минутах)</label>
-                                <label for="preparation_time"></label>
-                                <input id="preparation_time" class="form-control" name="preparation_time" min="1"
-                                       max="120" pattern="/^\d+$/" required type="number" placeholder="30">
-                            </div>
-                            <div class="form-group">
-                                <label>Время приготовления: (в минутах)</label>
-                                <label for="cooking_time"></label>
-                                <input id="cooking_time" class="form-control" name="cooking_time" min="1" max="120"
-                                       pattern="/^\d+$/" required type="number" placeholder="80">
-                            </div>
-                            <div class="form-group">
-                                <label>Ссылка на литературу:</label>
-                                <label for="literature_url"></label>
-                                <input id="literature_url" class="form-control" name="literature_url"
-                                       pattern="(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?" required
-                                       type="url">
-                            </div>
-
-                            <h5>Ингредиенты:</h5>
-                            <div class="form-group">
-                                <label>Название:</label>
-                                <label for="ingredient_name"></label>
-                                <input id="ingredient_name" class="form-control" name="ingredient_name" maxlength="40"
-                                       pattern="/^[А-ЯЁ][а-яё]*$/" required type="text" placeholder="Сахар">
-                            </div>
-                            <div class="form-group">
-                                <label>Количество:</label>
-                                <label for="ingredient_count"></label>
-                                <input id="ingredient_count" class="form-control" name="ingredient_count" min="1"
-                                       max="300" pattern="/^\d+$/" required type="number" placeholder="5">
-                            </div>
-                            <div class="form-group">
-                                <label>Единицы измерения:</label>
-                                <label>
-                                    <select class="dropdown">
-                                        {% for unit in units_of_measurement %}
-                                            <option>{{ unit.value }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </label>
-                                <button class="rounded-circle btn btn-primary" data-toggle="tooltip"
-                                        title="Добавление ингредиента">
-                                    <span class="fa fa-plus"></span>
-                                </button>
-                            </div>
-
-                            <h5>Утварь:</h5>
-                            <div class="form-group">
-                                <label>Название:</label>
-                                <label for="implement_name"></label>
-                                <input id="implement_name" class="form-control" name="implement_name" maxlength="40"
-                                       pattern="/^[А-ЯЁ][а-яё]*$/" required type="text" placeholder="Духовка">
-                                <button class="rounded-circle btn btn-primary mt-2" data-toggle="tooltip"
-                                        title="Добавление утвари">
-                                    <span class="fa fa-plus"></span>
-                                </button>
-                            </div>
-
-                            <h5>Шаг приготовления:</h5>
-                            <div class="form-group">
-                                <label>Описание:</label>
-                                <label for="step_of_cook_description"></label>
-                                <input id="step_of_cook_description" size="3" class="form-control"
-                                       name="step_of_cook_description" maxlength="300" pattern="/^[А-ЯЁ][а-яё]*$/"
-                                       required type="text" placeholder="Сделайте то-то то-то">
-                                <button class="rounded-circle btn btn-primary mt-2" data-toggle="tooltip"
-                                        title="Добавление шага приготовления">
-                                    <span class="fa fa-plus"></span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                        <button type="button" class="btn btn-primary">Добавить блюдо</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endblock %}
 {% endblock %}
 
 {% block variable_js %}

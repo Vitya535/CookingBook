@@ -1,7 +1,6 @@
 $(document).ready(function () {
     const csrf_token = $('meta[name=csrf-token]').attr('content');
     const buttons_for_delete = $('.bi-trash').parent();
-    const buttons_for_update = $('.bi-pencil').parent();
 
     $.ajaxSetup({
         headers: {
@@ -45,21 +44,6 @@ $(document).ready(function () {
                         });
                 },
                 No: function () {
-                }
-            }
-        });
-    });
-
-    $(buttons_for_update).on('click', function () {
-        $.confirm({
-            title: 'Редактирование блюда',
-            content: 'Вы действительно хотите отредактировать данные об этом блюде?',
-            buttons: {
-                Yes: function () {
-                    $.alert('Confirmed!');
-                },
-                No: function () {
-                    $.alert('Canceled!');
                 }
             }
         });

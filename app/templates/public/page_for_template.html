@@ -23,25 +23,14 @@
     </noscript>
     <style type="text/css">
         .navbar {
-            background: #57c206;
             font-family: 'Yanone Kaffeesatz', sans-serif;
         }
 
-        .nav-link, .navbar-brand {
-            color: black;
-            cursor: pointer;
-        }
-
-        .nav-link {
-            margin-right: 1em !important;
-        }
-
-        .navbar-collapse {
-            justify-content: flex-end;
-        }
-
-        .navbar-toggler {
-            background: white !important;
+        .sticky-top {
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 1019;
         }
     </style>
 
@@ -49,38 +38,41 @@
     {% endblock %}
 </head>
 <body>
-<nav class="navbar navbar-expand fixed-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('main.show_first_page') }}">{{ gettext('Кулинарная книга') }}</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
-                    {{ gettext('Блюда') }}
-                    <b class="caret"></b>
-                </a>
-                {% block nav_menu %}
-                    <div class="dropdown-menu">
-                        {% for type in types_of_dish %}
+<nav class="navbar navbar-expand-lg bg-success sticky-top">
+    <a class="navbar-brand text-dark px-2"
+       href="{{ url_for('main.show_first_page') }}">{{ gettext('Кулинарная книга') }}</a>
+    <button class="navbar-toggler bg-white" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <div class="dropdown">
+            <a class="nav-link dropdown-toggle text-dark mr-2" data-toggle="dropdown" href="#">
+                {{ gettext('Блюда') }}
+                <b class="caret"></b>
+            </a>
+            {% block nav_menu %}
+                <div class="dropdown-menu">
+                    {% for type in types_of_dish %}
+                        {% if type.value == selected_dish %}
+                            <a class="dropdown-item active"
+                               href="{{ url_for('main.show_dishes', type_of_dishes=type.name|lower) }}">{{ gettext(type.value) }}</a>
+                        {% else %}
                             <a class="dropdown-item"
                                href="{{ url_for('main.show_dishes', type_of_dishes=type.name|lower) }}">{{ gettext(type.value) }}</a>
-                        {% endfor %}
-                    </div>
-                {% endblock %}
-            </div>
-            <a class="nav-link" href="{{ url_for('main.show_about') }}">{{ gettext('О проекте') }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endblock %}
         </div>
+        <a class="nav-link text-dark mr-2" href="{{ url_for('main.show_about') }}">{{ gettext('О проекте') }}</a>
     </div>
 </nav>
 
 {% block content %}
 {% endblock %}
 
-{% block modal_windows %}
-{% endblock %}
 </body>
 
 {% assets 'popper_bootstrap_jquery-confirm_js' %}

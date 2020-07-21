@@ -1,0 +1,27 @@
+{% extends 'public/page_for_template.html' %}
+
+{% block variable_css %}
+    <style type="text/css">
+        .header {
+            background-image: url('../../static/img/background_first_page.webp');
+            background-position: center;
+            background-size: cover;
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <header class="header vh-100">
+        <div class="container-fluid h-100 justify-content-center align-items-center d-flex">
+            <div class="text-center">
+                <h3 class="text-white">
+                    {{ content }}
+                </h3>
+            </div>
+        </div>
+    </header>
+{% endblock %}

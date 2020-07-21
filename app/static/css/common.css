@@ -1,5 +1,12 @@
-.nav-link:hover
+a.text-dark:hover,
+a.text-dark:focus
 {
-    background: white;
-    color: orange;
+    background-color: white;
+}
+
+a.dropdown-item:hover,
+a.dropdown-item:focus
+{
+    background-color: black;
+    color: white;
 }
