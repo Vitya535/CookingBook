@@ -1,6 +1,10 @@
 """Инициализация маршрутов для API в приложении"""
-from flask import Blueprint
+from flask_restful import Api
 
-bp = Blueprint('api', __name__)
+from app.api.routes import AllDishesResource
+from app.api.routes import DishResource
 
-from app.api import routes
+api = Api(prefix='/api')
+
+api.add_resource(AllDishesResource, '/dishes')
+api.add_resource(DishResource, '/dishes/<int:dish_id>')

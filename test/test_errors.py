@@ -1,7 +1,7 @@
 """Тесты для различных ошибок в приложении"""
+from test import BaseTestCase
 from app.orm_db_actions import search_dishes
 from app.utils import TypesOfDish
-from test import BaseTestCase
 
 
 class ErrorTestCase(BaseTestCase):
@@ -17,7 +17,7 @@ class ErrorTestCase(BaseTestCase):
 
     def test_csrf_error(self):
         """Тестирование ошибки CSRF Error 400 (Bad Request)"""
-        with self.app.test_request_context() as ctx:
+        with self.app.test_request_context():
             dish_name = 'Кекс рождественский с мандаринами'
             r = self.client.post('/delete', data={'dish_name': dish_name})
             result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, dish_name)
@@ -27,6 +27,4 @@ class ErrorTestCase(BaseTestCase):
             self.assertTrue(r.headers.get('X-CSRFToken') is None)
             self.assertEqual(r.status_code, 400)
             self.assertTrue('<title>Csrf Error</title>' in r.get_data(as_text=True))
-            self.assertTrue(
-            "<h1>К сожалению, на странице произошла CSRF-ошибка. Приносим извинения за доставленные неудобства</h1>" in r.get_data(
-                as_text=True))
+            self.assertTrue("<h1>К сожалению, на странице произошла CSRF-ошибка. Приносим извинения за доставленные неудобства</h1>" in r.get_data(as_text=True))

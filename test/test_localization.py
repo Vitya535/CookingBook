@@ -1,8 +1,8 @@
 """Тесты для локализации в приложении"""
+from test import BaseTestCase
 from app.orm_db_actions import delete_dish
 from app.orm_db_actions import search_dishes
 from app.utils import TypesOfDish
-from test import BaseTestCase
 
 
 class LocalizationTestCase(BaseTestCase):
@@ -46,6 +46,7 @@ class LocalizationTestCase(BaseTestCase):
         self.assertTrue('<title>Sweet food and drinks</title>' in r.get_data(as_text=True))
 
     def test_localization_not_found_error(self):
+        """Тест Not Found ошибки при локализации"""
         r = self.client.get('/ab')
         self.assertEqual(r.status_code, 404)
         self.assertTrue('<title>404 Not Found Error</title>' in r.get_data(as_text=True))
@@ -53,7 +54,8 @@ class LocalizationTestCase(BaseTestCase):
                         in r.get_data(as_text=True))
 
     def test_localization_csrf_error(self):
-        with self.app.test_request_context() as ctx:
+        """Тест выдачи CSRF ошибки для локализации"""
+        with self.app.test_request_context():
             dish_name = 'Christmas cupcake with tangerines'
             r = self.client.post('/delete', data={'dish_name': dish_name})
             result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, dish_name)
@@ -67,33 +69,18 @@ class LocalizationTestCase(BaseTestCase):
 
     def test_localization_delete_query(self):
         """Тест POST запроса удаления блюда с локализацией"""
-        with self.app.test_request_context() as ctx:
+        with self.app.test_request_context():
             self.app.config['WTF_CSRF_ENABLED'] = False
             dish_name = 'Muzzle Cookies'
-            r = self.client.post('/delete', data={'dish_name': dish_name})
-            result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, dish_name)
-            self.assertEqual(r.get_data(as_text=True), '{}\n')
-            self.assertEqual(result, [])
-            self.assertEqual(r.status_code, 200)
+            self.check_delete_query(dish_name)
 
     def test_localization_get_dishes_by_type(self):
         """Тест SQL запроса на получение определенного типа блюд с локализацией"""
-        with self.app.test_request_context() as ctx:
-            result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, '')
-            expected = list(self.dishes[1:3])
-            self.assertEqual(expected, result)
-
-            result = search_dishes(TypesOfDish.MEAT_DISHES, '')
-            expected = [self.dishes[0]]
-            self.assertEqual(expected, result)
-
-            result = search_dishes(TypesOfDish.SAUCES_AND_MARINADES, '')
-            expected = []
-            self.assertEqual(expected, result)
+        self.check_get_dishes_by_type()
 
     def test_localization_get_dishes_by_type_and_name(self):
         """Тест SQL запроса на получение определенного типа блюд, совпадающих с вхождением названия с локализацией"""
-        with self.app.test_request_context() as ctx:
+        with self.app.test_request_context():
             expected = list(self.dishes[1:3])
             result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, 'C')
             self.assertEqual(expected, result)
@@ -108,7 +95,7 @@ class LocalizationTestCase(BaseTestCase):
 
     def test_localization_delete_dish_by_name(self):
         """Тест SQL запроса на удаление блюда по его полному названию с локализацией"""
-        with self.app.test_request_context() as ctx:
+        with self.app.test_request_context():
             delete_dish('Christmas cupcake with tangerines')
             result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, 'Christmas cupcake with tangerines')
             self.assertEqual(result, [])

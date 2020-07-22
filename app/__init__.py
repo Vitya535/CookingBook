@@ -10,30 +10,28 @@ from flask import current_app
 from flask import request
 from flask.logging import create_logger
 
+from app.api import api
 from app.assets import ASSETS
+from app.errors import bp as errors_bp
 from app.extensions import babel
 from app.extensions import cdn
 from app.extensions import compress
 from app.extensions import csrf
 from app.extensions import db
 from app.extensions import session
+from app.main import bp as main_bp
 from app.security import CSP
 from app.security import TALISMAN
 
 
 def create_app():
-    """Функция, реализующая паттерн Application Factory (нужна для создания экземпляра приложения с нужной конфигурацией)"""
+    """Функция, реализующая паттерн Application Factory
+    (нужна для создания экземпляра приложения с нужной конфигурацией)"""
     app = Flask(__name__)
     app.config.from_object(f'app.config.{app.config["ENV"]}Config')
 
-    from app.main import bp as main_bp
     app.register_blueprint(main_bp)
-
-    from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
-
-    from app.api import bp as api_bp
-    app.register_blueprint(api_bp, url_prefix='/api')
 
     init_logs(app)
 
@@ -44,6 +42,7 @@ def create_app():
     cdn.init_app(app)
     compress.init_app(app)
     babel.init_app(app)
+    api.init_app(app)
     TALISMAN.init_app(app, content_security_policy=CSP, force_https=False)
 
     return app

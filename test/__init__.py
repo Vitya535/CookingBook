@@ -8,6 +8,7 @@ from app.orm_db import Implement
 from app.orm_db import Ingredient
 from app.orm_db import Recipe
 from app.orm_db import StepOfCook
+from app.orm_db_actions import search_dishes
 from app.utils import TypesOfDish
 from app.utils import UnitsOfMeasurement
 
@@ -108,3 +109,28 @@ class BaseTestCase(TestCase):
         for ingredient in self.ingredients:
             self.db.session.add(ingredient)
             self.db.session.commit()
+
+
+    def check_get_dishes_by_type(self):
+        """Чек SQL запроса на получение определенного типа блюд"""
+        with self.app.test_request_context():
+            result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, '')
+            expected = list(self.dishes[1:3])
+            self.assertEqual(expected, result)
+
+            result = search_dishes(TypesOfDish.MEAT_DISHES, '')
+            expected = [self.dishes[0]]
+            self.assertEqual(expected, result)
+
+            result = search_dishes(TypesOfDish.SAUCES_AND_MARINADES, '')
+            expected = []
+            self.assertEqual(expected, result)
+
+
+    def check_delete_query(self, dish_name):
+        """Чек POST запроса на удаление блюда по его названию"""
+        r = self.client.post('/delete', data={'dish_name': dish_name})
+        result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, dish_name)
+        self.assertEqual(r.get_data(as_text=True), '{}\n')
+        self.assertEqual(result, [])
+        self.assertEqual(r.status_code, 200)

@@ -38,6 +38,7 @@ class Dish(db.Model):
 
 
     def to_dict(self) -> dict:
+        """Конвертирование данных о блюде в словарь"""
         dish_data = {
             'id': self.id,
             'name': self.name,
@@ -49,6 +50,7 @@ class Dish(db.Model):
 
 
     def from_dict(self, data):
+        """Заполнение данных о блюде через словарь"""
         for field in ('name', 'description', 'portion_count', 'type_of_dish'):
             if field in data:
                 setattr(self, field, data[field])
