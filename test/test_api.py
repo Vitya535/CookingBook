@@ -86,6 +86,7 @@ class ApiTestCase(BaseTestCase):
 
     def test_create_dish_with_enabled_csrf(self):
         """Тест создания блюда через POST запрос с включенной CSRF-защитой"""
+        self.app.config['WTF_CSRF_ENABLED'] = True
         new_dish_data = {
             'description': 'Соус из запеченных баклажан и помидоров отлично сочетается с мясом, матнакашем, запеченным картофелем. Остроты добавит свежий лук. Можно дать настояться около часа, так соус-дип станет еще вкуснее.',
             'name': 'Соус-дип из запеченных баклажан',
@@ -168,6 +169,7 @@ class ApiTestCase(BaseTestCase):
 
     def test_update_dish_with_enabled_csrf(self):
         """Тест редактирования блюда через PUT запрос с включенной CSRF-защитой"""
+        self.app.config['WTF_CSRF_ENABLED'] = True
         data_to_update = {
             'description': 'Беспроигрышный вариант накормить гостей за праздничным столом - запечь курицу целиком в духовке. Блюдо смотрится богато и аппетитно! Птицу замаринуйте в соевом маринаде, затем смажьте творожным сыром.',
             'name': 'Соус-дип из запеченных баклажан',
@@ -198,6 +200,7 @@ class ApiTestCase(BaseTestCase):
 
     def test_delete_dish_with_enabled_csrf(self):
         """Тест удаления блюда с включенной CSRF-защитой"""
+        self.app.config['WTF_CSRF_ENABLED'] = True
         r = self.client.delete('/api/dishes/1')
         self.assertTrue(r.headers.get('X-CSRFToken') is None)
         self.assertEqual(r.status_code, 400)

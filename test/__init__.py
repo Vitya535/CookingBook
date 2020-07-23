@@ -16,21 +16,28 @@ from app.utils import UnitsOfMeasurement
 class BaseTestCase(TestCase):
     """Базовый класс для всех тест-кейсов приложения"""
 
+    app_ctx = None
+
+    @classmethod
+    def setUpClass(cls):
+        cls.app = create_app()
+        cls.app_ctx = cls.app.app_context()
+        cls.app_ctx.push()
+        cls.client = cls.app.test_client()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.app_ctx.pop()
+
     def setUp(self):
         """Инициализация необходимых параметров"""
-        self.app = create_app()
-        self.app_ctx = self.app.app_context()
-        self.app_ctx.push()
-        self.client = self.app.test_client()
-        self.db = db
-        self.db.create_all()
+        db.create_all()
         self.populate_db()
 
     def tearDown(self):
         """Очистка параметров после каждого теста"""
-        self.db.session.remove()
-        self.db.drop_all()
-        self.app_ctx.pop()
+        db.session.remove()
+        db.drop_all()
 
     def populate_db(self):
         """Метод для наполнения тестовой базы данных"""
@@ -94,24 +101,9 @@ class BaseTestCase(TestCase):
                            Ingredient("Лимон", 1, UnitsOfMeasurement.SHTUKI),
                            Ingredient("Веточка розмарина", 1, UnitsOfMeasurement.SHTUKI),
                            Ingredient("Сахарная пудра", 1, UnitsOfMeasurement.TABLE_SPOON))
-        self.db.session.add_all(self.dishes)
-        self.db.session.add_all(data_for_dishes)
-        self.db.session.commit()
-
-    def check_get_dishes_by_type(self):
-        """Чек SQL запроса на получение определенного типа блюд"""
-        with self.app.test_request_context():
-            result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, '')
-            expected = list(self.dishes[1:3])
-            self.assertEqual(expected, result)
-
-            result = search_dishes(TypesOfDish.MEAT_DISHES, '')
-            expected = [self.dishes[0]]
-            self.assertEqual(expected, result)
-
-            result = search_dishes(TypesOfDish.SAUCES_AND_MARINADES, '')
-            expected = []
-            self.assertEqual(expected, result)
+        db.session.add_all(self.dishes)
+        db.session.add_all(data_for_dishes)
+        db.session.commit()
 
     def check_delete_query(self, dish_name):
         """Чек POST запроса на удаление блюда по его названию"""
