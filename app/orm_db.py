@@ -49,11 +49,10 @@ class Dish(db.Model):
         return dish_data
 
 
-    def from_dict(self, data):
+    def from_dict(self, data: dict):
         """Заполнение данных о блюде через словарь"""
         for field in ('name', 'description', 'portion_count', 'type_of_dish'):
-            if field in data:
-                setattr(self, field, data[field])
+            setattr(self, field, data.get(field))
 
     def __init__(self, description=None, name=None, portion_count=None, type_of_dish=None):
         self.description = description
