@@ -2,7 +2,10 @@
 from flask_babel import lazy_gettext
 from markupsafe import Markup
 from wtforms import Form
+from wtforms import PasswordField
 from wtforms import StringField
+from wtforms import BooleanField
+from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired
 from wtforms.validators import Length
 from wtforms.widgets import html_params
@@ -40,3 +43,30 @@ class DishSearchForm(Form):
                                 '<path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5'
                                 ' 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/></svg>',
                                 render_kw={'title': lazy_gettext('Поиск'), 'class': 'btn btn-success'})
+
+
+class LoginForm(Form):
+    """Форма для авторизации пользователя в системе"""
+    email = EmailField(lazy_gettext('Электронная почта'), [DataRequired(), Length(min=1, max=50)],
+                       render_kw={'placeholder': lazy_gettext('Электронная почта'), 'autofocus': '',
+                                  'class': 'form-control'})
+    password = PasswordField(lazy_gettext('Пароль'), [DataRequired(), Length(min=1, max=20)],
+                             render_kw={'placeholder': lazy_gettext('Пароль'), 'class': 'form-control mb-3'})
+    remember_me = BooleanField()
+    submit_button = ButtonField('Войти', render_kw={'class': 'btn btn-lg btn-primary btn-block', 'type': 'submit'})
+
+
+class RegistrationForm(Form):
+    """Форма для регистрации пользователя в системе"""
+    nickname = StringField(lazy_gettext('Имя в системе'), [DataRequired(), Length(min=1, max=20)],
+                           render_kw={'placeholder': lazy_gettext('Имя в системе'), 'autofocus': '',
+                                      'class': 'form-control'})
+    email = EmailField(lazy_gettext('Электронная почта'), [DataRequired(), Length(min=1, max=50)],
+                       render_kw={'placeholder': lazy_gettext('Электронная почта'),
+                                  'class': 'form-control'})
+    password = PasswordField(lazy_gettext('Пароль'), [DataRequired(), Length(min=1, max=20)],
+                             render_kw={'placeholder': lazy_gettext('Пароль'), 'class': 'form-control'})
+    repeat_password = PasswordField(lazy_gettext('Повторите пароль'), [DataRequired(), Length(min=1, max=20)],
+                                    render_kw={'placeholder': lazy_gettext('Повторите пароль'),
+                                               'class': 'form-control mb-3'})
+    submit_button = ButtonField('Войти', render_kw={'class': 'btn btn-lg btn-primary btn-block', 'type': 'submit'})

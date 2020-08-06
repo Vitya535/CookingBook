@@ -11,14 +11,14 @@ from app.orm_db_actions import Dish
 def check_json_data(data):
     """Проверка пришедших JSON-данных на валидность"""
     dish_attrs = ('name', 'description', 'portion_count', 'type_of_dish')
-    if not all(attribute in data for attribute in dish_attrs):
-        abort(400)
-    if Dish.query.filter((Dish.name == data['name']) | (Dish.description == data['description'])).first():
+    if any((not all(attribute in data for attribute in dish_attrs),
+            Dish.query.filter((Dish.name == data['name']) | (Dish.description == data['description'])).first())):
         abort(400)
 
 
 class AllDishesResource(Resource):
     """Ресурс API для того, чтобы достать все блюда и создать блюдо"""
+
     def get(self):
         """GET запрос, достающий все блюда, которые есть в БД"""
         dishes_dict = tuple(dish.to_dict() for dish in Dish.query.all())
@@ -37,6 +37,7 @@ class AllDishesResource(Resource):
 
 class DishResource(Resource):
     """Ресурс API для того, чтобы достать конкретное блюдо по id, отредактировать его или же удалить"""
+
     def get(self, dish_id):
         """GET запрос, достающий блюдо по его id, если оно есть в базе"""
         return jsonify(Dish.query.get_or_404(dish_id).to_dict())

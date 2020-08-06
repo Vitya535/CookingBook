@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Recipe of dishes for cooking.">
+    <meta name="theme-color" content="#317EFB"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    {% block title %}
+        <title>{{ gettext('Авторизация') }}</title>
+    {% endblock %}
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
+    {% assets 'jquery-confirm_fontawesome_custom_css' %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
+
+    {% block variable_css %}
+        <style type="text/css">
+            .form-signin {
+                max-width: 330px;
+                padding: 15px;
+            }
+
+            .form-signin input[type="email"] {
+                margin-bottom: -1px;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+
+            .form-signin input[type="password"] {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body class="text-center justify-content-center align-items-center d-flex h-100">
+    <form action="{{ url_for('jwt.login') }}" method="post" class="form-signin w-100 my-0 mx-auto">
+        <h3>{{ gettext('Вход') }}</h3>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <label for="email" class="sr-only">{{ gettext('Электронная почта') }}</label>
+        {{ form.email }}
+        <label for="password" class="sr-only">{{ gettext('Пароль') }}</label>
+        {{ form.password }}
+        <div class="mb-3">
+            <label>
+                {{ form.remember_me }}
+                Remember me
+            </label>
+        </div>
+        {{ form.submit_button }}
+        <a href="{{ url_for('jwt.registration') }}">{{ gettext('Еще не зарегистрированы?') }}</a>
+    </form>
+</body>
+
+{% assets 'popper_bootstrap_jquery-confirm_js' %}
+    <script type="application/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+
+{% block variable_js %}
+{% endblock %}
+
+</html>

@@ -28,7 +28,7 @@ def show_dishes(type_of_dishes: str) -> str:
     dish_search_form = DishSearchForm(request.args)
     query_title = request.args.get('dish_name', '')
     dishes_info = search_dishes(TypesOfDish[type_of_dishes.upper()], query_title)
-    return minify(render_template('public/dish_page.html',
+    return minify(render_template('main/dish_page.html',
                                   units_of_measurement=UnitsOfMeasurement,
                                   selected_dish=TypesOfDish[type_of_dishes.upper()].value,
                                   type_of_dishes=type_of_dishes,
@@ -49,7 +49,7 @@ def delete_dish_info():
 def show_first_page() -> str:
     """Функция для показа главной странички приложения"""
     current_app.logger.debug(f'Enter into {show_first_page.__name__}')
-    return minify(render_template('public/first_and_about_page.html',
+    return minify(render_template('main/first_and_about_page.html',
                                   title='Кулинарная книга',
                                   content=Markup(f'{gettext("Добро пожаловать в кулинарную книгу!!!")}'
                                                  f'<p class="h5">{gettext("Здесь вы найдете множество различных рецептов! Надеюсь, что вы найдете блюда, которые придутся вам по душе!")}</p>')))
@@ -59,7 +59,7 @@ def show_first_page() -> str:
 def show_about() -> str:
     """Функция для показа странички 'О приложении'"""
     current_app.logger.debug(f'Enter into {show_about.__name__}')
-    return minify(render_template('public/first_and_about_page.html',
+    return minify(render_template('main/first_and_about_page.html',
                                   title='О проекте',
                                   content=Markup(f'{gettext("О проекте:")}'
                                                  f'<p class="h5">{gettext("Рецепты взяты из книг и интернета :)")}</p>'

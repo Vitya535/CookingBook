@@ -10,7 +10,7 @@ class Config:
     TRANSLATION_DIR_RELPATH = '../translations'
     SESSION_TYPE = 'filesystem'
     WTF_CSRF_ENABLED = CDN_HTTPS = SESSION_COOKIE_HTTPONLY = True
-    SECRET_KEY = urandom(16)
+    SECRET_KEY = JWT_SECRET_KEY = urandom(16)
     SQLALCHEMY_DATABASE_URI = f'sqlite:///{join(dirname(__file__), APP_DB_RELPATH)}'
     CDN_TIMESTAMP = JSON_AS_ASCII = False
     CDN_DOMAIN = 'cdnjs.cloudflare.com'
