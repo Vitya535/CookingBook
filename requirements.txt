@@ -5,14 +5,13 @@ Flask-Assets
 Flask-Babel
 Flask-CDN
 Flask-Compress
-Flask-JWT-Extended
+Flask-Login
 Flask-RESTful
 Flask-SQLAlchemy
 Flask-Session
 Flask-WTF
 Jinja2
 MarkupSafe
-PyJWT
 PyYAML
 SQLAlchemy
 SQLAlchemy-Utils
@@ -21,6 +20,7 @@ WTForms-Alchemy
 WTForms-Components
 Werkzeug
 aniso8601
+astroid
 cachelib
 certifi
 chardet

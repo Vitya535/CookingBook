@@ -101,8 +101,7 @@ class BaseTestCase(TestCase):
                            Ingredient("Лимон", 1, UnitsOfMeasurement.SHTUKI),
                            Ingredient("Веточка розмарина", 1, UnitsOfMeasurement.SHTUKI),
                            Ingredient("Сахарная пудра", 1, UnitsOfMeasurement.TABLE_SPOON))
-        db.session.add_all(self.dishes)
-        db.session.add_all(data_for_dishes)
+        db.session.add_all(self.dishes + data_for_dishes)
         db.session.commit()
 
     def check_delete_query(self, dish_name):
@@ -110,5 +109,5 @@ class BaseTestCase(TestCase):
         r = self.client.post('/delete', data={'dish_name': dish_name})
         result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, dish_name)
         self.assertEqual(r.get_data(as_text=True), '{}\n')
-        self.assertEqual(result, [])
+        self.assertEqual(result, ())
         self.assertEqual(r.status_code, 200)

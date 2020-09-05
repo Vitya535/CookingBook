@@ -1,4 +1,5 @@
 """Бд для кулинарной книги через ORM"""
+from flask_login import UserMixin
 from sqlalchemy import CheckConstraint
 from sqlalchemy import Table
 
@@ -138,3 +139,20 @@ class Recipe(db.Model):
     def __repr__(self):
         return f"Recipe({self.id}, {self.img_url}, {self.literature_url}, {self.time_on_preparation}," \
                f" {self.time_on_cooking}, {self.dish_id})"
+
+
+class User(UserMixin, db.Model):
+    """Табличка пользователя"""
+    __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nickname = db.Column(db.String, nullable=False, unique=True)
+    email = db.Column(db.String, nullable=False, unique=True)
+    password = db.Column(db.String, nullable=False)
+
+    def __init__(self, nickname, email, password):
+        self.nickname = nickname
+        self.email = email
+        self.password = password
+
+    def __repr__(self):
+        return f"User({self.nickname}, {self.email}, {self.password})"

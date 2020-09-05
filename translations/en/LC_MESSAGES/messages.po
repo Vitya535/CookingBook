@@ -54,10 +54,6 @@ msgstr "Recipes taken from books and internet :)"
 msgid "Автор: Кушнеренко Виктор"
 msgstr "Author: Kushnerenko Viktor"
 
-#: app/templates/public/dish_page.html:74
-msgid "Добавить блюдо"
-msgstr "Add dish"
-
 #: app/templates/public/dish_page.html:83
 msgid "Количество порций:"
 msgstr "Portion count:"
@@ -65,10 +61,6 @@ msgstr "Portion count:"
 #: app/templates/public/dish_page.html:84
 msgid "Удаление блюда"
 msgstr "Delete dish"
-
-#: app/templates/public/dish_page.html:90
-msgid "Редактирование блюда"
-msgstr "Edit dish"
 
 #: app/templates/public/dish_page.html:96
 msgid "Изображение блюда"
@@ -103,7 +95,7 @@ msgid "Ингредиенты:"
 msgstr "Ingredients:"
 
 #: app/templates/public/first_page.html:28
-msgid "Добро пожаловать на сайт \"Кулинарная книга\"!!!"
+msgid "Добро пожаловать в кулинарную книгу!!!"
 msgstr "Welcome to our cooking book site!!!"
 
 #: app/templates/public/first_page.html:29
@@ -365,3 +357,60 @@ msgstr "Egg white"
 
 msgid "Яйца"
 msgstr "Eggs"
+
+msgid "Авторизация"
+msgstr "Authorization"
+
+msgid "Вход в систему"
+msgstr "Sign in"
+
+msgid "Вы еще не зарегистрированы?"
+msgstr "You are not register?"
+
+msgid "Уже зарегистрированы?"
+msgstr "Already register?"
+
+msgid "Регистрация"
+msgstr "Sign up"
+
+msgid "Имя пользователя"
+msgstr "Username"
+
+msgid "Электронная почта"
+msgstr "Email"
+
+msgid "Пароль"
+msgstr "Password"
+
+msgid "Запомнить логин"
+msgstr "Remember me"
+
+msgid "Войти"
+msgstr "Sign in"
+
+msgid "Повторите пароль"
+msgstr "Repeat password"
+
+msgid "Мои блюда"
+msgstr "My dishes"
+
+msgid "Добавить блюдо"
+msgstr "Add dish"
+
+msgid "Язык:"
+msgstr "Language:"
+
+msgid "Выйти из системы"
+msgstr "Sign out"
+
+msgid "Пароли не совпадают!"
+msgstr "Passwords isn't matching!"
+
+msgid "Это имя пользователя уже занято, выберите другое!"
+msgstr "That username is already taken, please choose another!"
+
+msgid "Такого пользователя не существует!"
+msgstr "That user isn't exist!"
+
+msgid "Пароль неверен!"
+msgstr "Password is incorrect!"

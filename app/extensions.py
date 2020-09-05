@@ -2,7 +2,7 @@
 from flask_babel import Babel
 from flask_cdn import CDN
 from flask_compress import Compress
-from flask_jwt_extended import JWTManager
+from flask_login import LoginManager
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
@@ -13,4 +13,4 @@ csrf = CSRFProtect()
 cdn = CDN()
 compress = Compress()
 babel = Babel()
-jwt_manager = JWTManager()
+login_manager = LoginManager()

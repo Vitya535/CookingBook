@@ -12,15 +12,15 @@ from flask.logging import create_logger
 
 from app.api import api
 from app.assets import ASSETS
+from app.auth import bp as auth_bp
 from app.errors import bp as errors_bp
 from app.extensions import babel
 from app.extensions import cdn
 from app.extensions import compress
 from app.extensions import csrf
 from app.extensions import db
-from app.extensions import jwt_manager
+from app.extensions import login_manager
 from app.extensions import session
-from app.jwt import bp as jwt_bp
 from app.main import bp as main_bp
 from app.security import CSP
 from app.security import TALISMAN
@@ -33,7 +33,7 @@ def create_app():
     app.config.from_object(f'app.config.{app.config["ENV"]}Config')
 
     app.register_blueprint(main_bp)
-    app.register_blueprint(jwt_bp)
+    app.register_blueprint(auth_bp)
     app.register_blueprint(errors_bp)
 
     init_logs(app)
@@ -46,7 +46,7 @@ def create_app():
     compress.init_app(app)
     babel.init_app(app)
     api.init_app(app)
-    jwt_manager.init_app(app)
+    login_manager.init_app(app)
     TALISMAN.init_app(app, content_security_policy=CSP, force_https=False)
 
     return app

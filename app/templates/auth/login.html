@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#317EFB"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {% block title %}
-        <title>{{ gettext('Авторизация') }}</title>
+        <title>{{ gettext(LOGIN) }}</title>
     {% endblock %}
     <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
@@ -38,12 +38,12 @@
     {% endblock %}
 </head>
 <body class="text-center justify-content-center align-items-center d-flex h-100">
-    <form action="{{ url_for('jwt.login') }}" method="post" class="form-signin w-100 my-0 mx-auto">
-        <h3>{{ gettext('Вход') }}</h3>
+    <form action="{{ url_for('auth.login') }}" method="post" class="form-signin w-100 my-0 mx-auto">
+        <h3>{{ gettext(LOGIN) }}</h3>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        <label for="email" class="sr-only">{{ gettext('Электронная почта') }}</label>
+        <label for="email" class="sr-only">{{ gettext(EMAIL) }}</label>
         {{ form.email }}
-        <label for="password" class="sr-only">{{ gettext('Пароль') }}</label>
+        <label for="password" class="sr-only">{{ gettext(PASSWORD) }}</label>
         {{ form.password }}
         <div class="mb-3">
             <label>
@@ -51,8 +51,19 @@
                 Remember me
             </label>
         </div>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="mb-3">
+            {% for message in messages %}
+              <span class="text-danger mb-2">{{ message }}</span>
+            {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
         {{ form.submit_button }}
-        <a href="{{ url_for('jwt.registration') }}">{{ gettext('Еще не зарегистрированы?') }}</a>
+        <a href="{{ url_for('auth.registration') }}">{{ gettext(YOU_ALREADY_REGISTER) }}</a>
     </form>
 </body>
 

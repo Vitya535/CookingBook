@@ -62,7 +62,7 @@ class LocalizationTestCase(BaseTestCase):
             dish_name = 'Christmas cupcake with tangerines'
             r = self.client.post('/delete', data={'dish_name': dish_name})
             result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, dish_name)
-            expected = [self.dishes[2]]
+            expected = (self.dishes[2],)
             self.assertEqual(result, expected)
             self.assertTrue(r.headers.get('X-CSRFToken') is None)
             self.assertEqual(r.status_code, 400)
@@ -81,29 +81,29 @@ class LocalizationTestCase(BaseTestCase):
         """Тест SQL запроса на получение определенного типа блюд с локализацией"""
         with self.app.test_request_context():
             result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, '')
-            expected = list(self.dishes[1:3])
+            expected = tuple(self.dishes[1:3])
             self.assertEqual(expected, result)
 
             result = search_dishes(TypesOfDish.MEAT_DISHES, '')
-            expected = [self.dishes[0]]
+            expected = (self.dishes[0],)
             self.assertEqual(expected, result)
 
             result = search_dishes(TypesOfDish.SAUCES_AND_MARINADES, '')
-            expected = []
+            expected = ()
             self.assertEqual(expected, result)
 
     def test_localization_get_dishes_by_type_and_name(self):
         """Тест SQL запроса на получение определенного типа блюд, совпадающих с вхождением названия с локализацией"""
         with self.app.test_request_context():
-            expected = list(self.dishes[1:3])
+            expected = tuple(self.dishes[1:3])
             result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, 'C')
             self.assertEqual(expected, result)
 
-            expected = [self.dishes[2]]
+            expected = (self.dishes[2],)
             result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, 'Christmas')
             self.assertEqual(expected, result)
 
-            expected = []
+            expected = ()
             result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, 'к')
             self.assertEqual(expected, result)
 
@@ -112,4 +112,4 @@ class LocalizationTestCase(BaseTestCase):
         with self.app.test_request_context():
             delete_dish('Christmas cupcake with tangerines')
             result = search_dishes(TypesOfDish.SWEET_FOOD_AND_DRINKS, 'Christmas cupcake with tangerines')
-            self.assertEqual(result, [])
+            self.assertEqual(result, ())

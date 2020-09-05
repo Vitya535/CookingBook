@@ -43,21 +43,23 @@
             <div class="row border-bottom border-dark">
                 <div class="col border-right border-dark">
                     <p class="font-weight-bold h3">{{ gettext(dish_info.name) }}</p>
-                    <p>{{ gettext('Количество порций:') }} {{ dish_info.portion_count }}</p>
-                    <button title="{{ gettext('Удаление блюда') }}" class="btn btn-danger" type="submit">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                            <path fill-rule="evenodd"
-                                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                        </svg>
-                    </button>
+                    <p>{{ gettext(PORTIONS_COUNT) }} {{ dish_info.portion_count }}</p>
+                    {% if not current_user.is_anonymous %}
+                        <button title="{{ gettext(DELETE_DISH) }}" class="btn btn-danger" type="submit">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path fill-rule="evenodd"
+                                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                            </svg>
+                        </button>
+                    {% endif %}
                     <img type="image/webp" src="{{ dish_info.recipes[0].img_url }}" class="img-fluid mt-2"
-                         alt="{{ gettext('Изображение блюда') }}">
-                    <p>{{ gettext('Описание:') }} {{ gettext(dish_info.description) }}</p>
-                    <p>{{ gettext('Время подготовки:') }} {{ gettext(dish_info.recipes[0].time_on_preparation) }}</p>
-                    <p>{{ gettext('Время приготовления:') }} {{ gettext(dish_info.recipes[0].time_on_cooking) }}</p>
-                    <p>{{ gettext('Ссылка на литературу:') }}
+                         alt="{{ gettext(DISH_IMAGE) }}">
+                    <p>{{ gettext(DESCRIPTION) }} {{ gettext(dish_info.description) }}</p>
+                    <p>{{ gettext(PREPARATION_TIME) }} {{ gettext(dish_info.recipes[0].time_on_preparation) }}</p>
+                    <p>{{ gettext(COOKING_TIME) }} {{ gettext(dish_info.recipes[0].time_on_cooking) }}</p>
+                    <p>{{ gettext(LITERATURE_URL) }}
                         <a href="{{ dish_info.recipes[0].literature_url }}"
                            class="text-dark font-weight-bold text-break">
                             {{ dish_info.recipes[0].literature_url }}
@@ -65,19 +67,19 @@
                     </p>
                 </div>
                 <div class="col-md border-right border-dark">
-                    <p class="font-weight-bold h3">{{ gettext('Утварь:') }}</p>
+                    <p class="font-weight-bold h3">{{ gettext(IMPLEMENT) }}</p>
                     {% for implement in dish_info.recipes[0].implements %}
                         <p>{{ gettext(implement.name) }}</p>
                     {% endfor %}
                 </div>
                 <div class="col-md border-right border-dark">
-                    <p class="font-weight-bold h3">{{ gettext('Способ приготовления:') }}</p>
+                    <p class="font-weight-bold h3">{{ gettext(STEP_OF_COOK) }}</p>
                     {% for step_of_cook in dish_info.recipes[0].steps_of_cook %}
                         <p>{{ step_of_cook.number_of_step }}. {{ gettext(step_of_cook.description) }}</p>
                     {% endfor %}
                 </div>
                 <div class="col-md">
-                    <p class="font-weight-bold h3">{{ gettext('Ингредиенты:') }}</p>
+                    <p class="font-weight-bold h3">{{ gettext(INGREDIENTS) }}</p>
                     {% for ingredient in dish_info.ingredients %}
                         <p>{{ gettext(ingredient.name) }}
                             - {{ ingredient.count }} {{ gettext(ingredient.unit_of_measurement.value) }}</p>
